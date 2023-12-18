@@ -42,3 +42,7 @@ Task Description: Todo Task
 
 ## Validation
 -   Implement appropriate validation rules for the operations.
+
+# Attention! 
+Firstly fork project from github and develop your project, finally be ready to make a pull request to return back your changes into main project.
+Don't forget , this step is crucial for you and your project won't be accepted unless yu do details of this section! 
