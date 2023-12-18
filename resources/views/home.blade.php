@@ -10,7 +10,7 @@
                 The global No. 1 among apps for to-do lists and task management.
             </p>
             @php
-               if(auth()){
+               if(!auth()->guest()){
                    $link = '/dashboard';
                } else {
                    $link = '/register';
