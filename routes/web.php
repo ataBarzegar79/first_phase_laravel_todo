@@ -3,6 +3,7 @@
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\TaskController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -33,4 +34,5 @@ Route::get('/register',[RegisterController::class,'create'])
 Route::post('/register',[RegisterController::class,'store'])
     ->middleware('guest');
 
-
+Route::resource('tasks',TaskController::class)
+    ->middleware('auth');

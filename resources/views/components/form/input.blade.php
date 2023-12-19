@@ -1,10 +1,6 @@
 @props(['name'])
 <div class="mb-5">
-    <label
-        for="{{ $name }}"
-        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-        Your {{ $name }}
-    </label>
+    <x-form.label :name="$name"/>
     <input
         id="{{ $name }}"
         name="{{ $name }}"
