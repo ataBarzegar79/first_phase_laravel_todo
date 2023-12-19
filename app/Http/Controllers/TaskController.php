@@ -14,15 +14,14 @@ class TaskController extends Controller
         return view('tasks.index', [
             'tasks' => auth()->user()->tasks()
                 ->latest('deadline')
-                ->filter(request(['search','status']))
-                ->when(request('status') !== 'except', function ($query) {
-                    $query->where(function ($query) {
-                        $query->where('status', '!=', 'COMPLETE')
-                            ->orWhere(function ($query) {
-                                $query->where('status', 'COMPLETE')
-                                    ->whereDate('completed_on', '>', now()->subDays(7));
-                            });
-                    });
+                ->filter(request(['search', 'status']))
+                ->where(function ($query) {
+                    $query->where('status', '!=', 'COMPLETE')
+                        ->orWhere(function ($query) {
+                            $query->where('status', 'COMPLETE')
+                                ->whereDate('completed_on', '>', now()->subDays(7));
+                        }
+                );
                 })
                 ->paginate(request('paginate') ?? 5)
                 ->withQueryString()
@@ -84,7 +83,7 @@ class TaskController extends Controller
             'title' => ['required'],
             'deadline' => ['required', 'date'],
             'description' => ['nullable'],
-            'status' => $task->exists ? ['required','integer'] : ['nullable','integer']
+            'status' => $task->exists ? ['required', 'integer'] : ['nullable', 'integer']
         ]);
     }
 }
