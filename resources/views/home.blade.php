@@ -11,7 +11,7 @@
             </p>
             @php
                if(!auth()->guest()){
-                   $link = '/dashboard';
+                   $link = '/tasks';
                } else {
                    $link = '/register';
                }

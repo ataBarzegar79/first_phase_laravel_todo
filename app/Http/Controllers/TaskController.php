@@ -83,8 +83,8 @@ class TaskController extends Controller
         return request()->validate([
             'title' => ['required'],
             'deadline' => ['required', 'date'],
-            'description' => ['nullable', 'string'],
-            'status' => $task->exists() ? ['required', 'integer'] : ['nullable', 'integer']
+            'description' => ['nullable'],
+            'status' => $task->exists ? ['required','integer'] : ['nullable','integer']
         ]);
     }
 }

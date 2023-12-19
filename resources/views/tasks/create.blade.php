@@ -5,7 +5,9 @@
                 @csrf
                 <x-form.input name="title" placeholder="Your task" required value="{{ old('title') }}" />
                 <x-form.input name="deadline" type="date" required value="{{ old('deadline') }}" />
-                <x-form.textarea name="description" value="{{ old('description') }}" />
+                <x-form.textarea name="description">
+                    {{ old('description') }}
+                </x-form.textarea>
                 <x-form.submit>
                     Create Task
                 </x-form.submit>
