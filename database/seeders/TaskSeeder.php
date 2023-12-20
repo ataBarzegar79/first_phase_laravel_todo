@@ -13,7 +13,7 @@ class TaskSeeder extends Seeder
     {
         $user = User::factory()->create([
             'name' => 'sajjad',
-            'email' => 'mohammadisajjad54@gmail.clom',
+            'email' => 'mohammadisajjad54@gmail.com',
             'password' => bcrypt('12345678'),
         ]);
         Task::factory(12)->create([
