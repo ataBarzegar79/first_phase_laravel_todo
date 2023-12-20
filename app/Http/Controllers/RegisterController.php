@@ -17,7 +17,7 @@ class RegisterController extends Controller
     public function store(StoreRegisterRequest $request)
     {
         $validated = $request->validated();
-        $validated['profile'] = request()->file('profile')->store('profiles');
+        $validated['profile'] = request()->file('profile')?->store('profiles');
         $user = User::create($validated);
         auth()->login($user);
         return redirect()->route('home')->with('success', __('messages.create',['name' => 'Account']));
