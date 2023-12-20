@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\TaskStatus;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -9,6 +10,9 @@ use Illuminate\Database\Eloquent\Model;
 class Task extends Model
 {
     use HasFactory;
+    protected $casts = [
+        'status' => TaskStatus::class,
+    ];
 
     public function scopeFilter($query, array $filters): void
     {
@@ -23,6 +27,14 @@ class Task extends Model
                 fn($query) => $query->where('status', 'like', $status)
             )
         );
+    }
+    public function scopeIncomplete(Builder $query): void
+    {
+        $query->where('status', '=', 'INCOMPLETE');
+    }
+    public function scopeComplete(Builder $query): void
+    {
+        $query->where('status', '=', 'COMPLETE');
     }
 
 }

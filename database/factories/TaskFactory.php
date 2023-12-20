@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Enums\TaskStatus;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -22,7 +23,7 @@ class TaskFactory extends Factory
             'description' => $this->faker->paragraph,
             'deadline' => $this->faker->dateTime,
             'completed_on' => $this->faker->dateTime,
-            'status' => $this->faker->randomElement(['INCOMPLETE','COMPLETE']),
+            'status' => $this->faker->randomElement([TaskStatus::Incomplete,TaskStatus::Complete]),
             'user_id' => User::factory()
         ];
     }

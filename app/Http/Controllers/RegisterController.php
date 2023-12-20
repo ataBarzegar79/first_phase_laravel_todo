@@ -20,6 +20,6 @@ class RegisterController extends Controller
         $validated['profile'] = request()->file('profile')->store('profiles');
         $user = User::create($validated);
         auth()->login($user);
-        return redirect()->route('home')->with('success', __('messages.create'));
+        return redirect()->route('home')->with('success', __('messages.create',['name' => 'Account']));
     }
 }

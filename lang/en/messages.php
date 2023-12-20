@@ -2,6 +2,8 @@
 
 return [
     'welcome' => 'Welcome Back!',
-    'create' => 'Your account successfully created!',
+    'create' => 'Your :name successfully created!',
     'goodbye' => 'GoodBye!',
+    'update' => ':name updated.',
+    'delete' => 'Your :name deleted successfully.'
 ];

@@ -1,10 +1,10 @@
 @props(['task'])
 @php
     switch ($task->status):
-        case 'COMPLETE':
+        case \App\Enums\TaskStatus::Complete:
             $colorStatus = 'bg-green-400';
             break;
-        case 'INCOMPLETE':
+        case \App\Enums\TaskStatus::Incomplete:
             $colorStatus = 'bg-red-400';
             break;
     endswitch;
