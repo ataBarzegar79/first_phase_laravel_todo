@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('tasks', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->longText('description')->nullable(); // todo : tend to use right data format a text would be appropriate, there is no need for a long text .
+            $table->text('description')->nullable();
             $table->timestamp('deadline');
             $table->timestamp('completed_on')->nullable();
             $table->enum('status',['INCOMPLETE','COMPLETE']);
