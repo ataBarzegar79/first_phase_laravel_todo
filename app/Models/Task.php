@@ -25,8 +25,4 @@ class Task extends Model
         );
     }
 
-    public function user() // todo: you should provide return type to all of your methods.
-    {
-        return $this->belongsTo(User::class); // todo : you haven't used this method, se remove it.
-    }
 }
