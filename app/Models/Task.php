@@ -24,6 +24,12 @@ class Task extends Model
                 ->where('select', '=', 'Completed')
                 ->whereDate('time', '<', Carbon::now()->subDays(7));
         });
+        $query->when($filters['select'] ?? false,function ($query,$select){
+            $query
+            ->whereExists(fn($query) =>
+            $query
+                ->where('select' , '=' , $select));
+        });
     }
 
     public function user(){

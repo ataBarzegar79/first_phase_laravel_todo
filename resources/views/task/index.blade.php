@@ -1,10 +1,19 @@
 <x-layout>
     <section class="px-6 py-12">
         <main class="w-full mx-auto mt-10 p-6 rounded-xl border bg-white">
-            <form action="#" method="GET">
-                <input type="text" name="search" class="bg-gray-200 placeholder-black font-semi-bold p-2 text-sm mb-3"
-                       placeholder="search" value="{{request('search')}}">
-            </form>
+            <div>
+                <div class="flex">
+                    <form action="#" method="GET">
+                        <input type="text" name="search" class="bg-gray-200 placeholder-black font-semi-bold p-2 text-sm mb-3"
+                               placeholder="search" value="{{request('search')}}">
+                    </form>
+                    <form action="#" method="get" onchange="this.form.submit()">
+                        <label for="select" class="block text-sm font-medium leading-6 text-gray-900"></label>
+                        <input type="text" name="select" class="ml-4 bg-gray-200 placeholder-black font-semi-bold p-2 text-sm mb-3"
+                               placeholder="Completed or NotCompleted" value="{{request('select')}}">
+                    </form>
+                </div>
+            </div>
             <table class="table-fixed border w-full">
                 <thead>
                 <tr>

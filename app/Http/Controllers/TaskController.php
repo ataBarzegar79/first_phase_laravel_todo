@@ -14,6 +14,7 @@ class TaskController extends Controller
     public function store(){
         $atterbutes = \request()->validate([
             'title' => 'required|max:100',
+            'select' => 'required',
             'slug' => 'required',
             'time' => 'required|date'
         ]);
@@ -26,7 +27,7 @@ class TaskController extends Controller
     {
         return view('task.index',[
             'task' => $task,
-            'index' => auth()->user()->task()->latest('time')->filter(request(['search']))->simplePaginate(5)
+            'index' => auth()->user()->task()->latest('time')->filter(request(['search','select']))->simplePaginate(5)
                 ->withQueryString()
         ]);
     }
