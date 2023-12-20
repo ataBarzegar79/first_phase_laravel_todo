@@ -36,3 +36,7 @@ Route::post('/register',[RegisterController::class,'store'])
 
 Route::resource('tasks',TaskController::class)
     ->middleware('auth');
+
+//todo: 2(7+1) of your routes are using auth middleware try to collect them together :https://laravel.com/docs/10.x/routing#route-group-middleware
+// todo : also do this for guest.
+

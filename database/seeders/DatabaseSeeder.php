@@ -13,6 +13,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        Task::factory(12)->create();
+        Task::factory(12)->create();  // todo : great usage of factories, now let's dig into a new challenge : create these tasks for a specific user.
+        // todo : just bear in mind it seems to be better to define a new seeder (TaskSeeder) and define it here.
     }
 }
