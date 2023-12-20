@@ -55,6 +55,16 @@
                                 </div>
                             </div>
                         </div>
+                        <div>
+                            <label for="select" class="block text-sm font-medium leading-6 text-gray-900"></label>
+                            <select class="p-2 bg-white" id="select" name="select">
+                                <option name="NotCompleted" id="NotCompleted" value="NotCompleted">Not completed</option>
+                                <option name="Completed" id="Completed" value="Completed">completed</option>
+                            </select>
+                            @error('select')
+                            <p class="text-red-500 text-xs mt-1">{{$message}}</p>
+                            @enderror
+                        </div>
 
                         <div class="mt-6 flex items-center justify-end gap-x-6">
                             <a href="/"><button type="button" class="text-sm font-semibold leading-6 text-gray-900">
