@@ -9,7 +9,8 @@
                 <x-form.textarea name="description">
                     {{ old('description',$task->description) }}
                 </x-form.textarea>
-                <x-form.dropdown nameInput="status" :name="$task->status" :options="[(object)['name'=>'INCOMPLETE','id'=>1],(object)['name'=>'COMPLETE','id'=>2]]"/>
+
+                <x-form.dropdown nameInput="status" :name="$task->status" :options="[(object)['name'=>'INCOMPLETE','id'=>'INCOMPLETE'],(object)['name'=>'COMPLETE','id'=>'COMPLETE']]"/>
                 <br>
                 <x-form.submit class="mt-5">
                     Update Task

@@ -1,5 +1,4 @@
 @props(['id','active','name'])
-
 <li>
     <div
         class="flex items-center p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-600">
@@ -15,8 +14,6 @@
         <label
             for="{{ $id }}"
             class="w-full ms-2 text-sm font-medium text-gray-900 rounded
-            dark:text-gray-300">
-            {{ $slot }}
-        </label>
+            dark:text-gray-300">{{ $slot }}</label>
     </div>
 </li>
