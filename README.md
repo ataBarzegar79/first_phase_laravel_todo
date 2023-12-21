@@ -16,7 +16,7 @@ Task Description: Todo Task
 ### Tasks Read
 -   Users can view a paginated list of all tasks.
 -   Include the task title, description, creation date, and completion status
--   Impelement:
+-   Implement:
     -   Pagination
     -   Sort by date
     -   Filter complete and incomplete tasks
