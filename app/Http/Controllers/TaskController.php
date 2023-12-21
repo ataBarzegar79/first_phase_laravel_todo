@@ -20,11 +20,7 @@ class TaskController extends Controller
             'tasks' => auth()->user()->tasks()
                 ->latest('deadline')
                 ->filter(request(['search', 'status']))
-                ->incomplete()
-                ->orWhere(function (Builder $query) {
-                    $query->complete()
-                        ->whereDate('completed_on', '>', now()->subDays(Config::get('view.completeDay')));
-                })
+                ->filteredTask()
                 ->paginate(request('paginate') ?? Config::get('view.paginate'))
                 ->withQueryString()
         ]);
@@ -63,7 +59,7 @@ class TaskController extends Controller
     {
         $validated = array_merge(
             $request->validated(), [
-                'completed_on' => request('status') === TaskStatus::Complete ? Carbon::now() : null
+                'completed_on' => request('status') === TaskStatus::Complete->value ? Carbon::now() : null
             ]
         );
         $task->update($validated);

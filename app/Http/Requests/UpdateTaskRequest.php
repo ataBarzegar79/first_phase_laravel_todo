@@ -28,7 +28,7 @@ class UpdateTaskRequest extends FormRequest
             'title' => ['required', 'string'],
             'deadline' => ['required', 'date'],
             'description' => ['nullable', 'string'],
-            'status' => ['required', 'string', Rule::in([TaskStatus::Incomplete, TaskStatus::Complete])],
+            'status' => ['required', 'string', Rule::enum(TaskStatus::class)],
         ];
     }
 }
