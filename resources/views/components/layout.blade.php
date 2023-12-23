@@ -27,8 +27,8 @@
     <nav class="bg-gray-800">
         <div class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
             <div class="relative flex h-16 items-center justify-between">
-                <div class="icon-flax">
-                    <a href="{{ auth()->user() ? '/index' : '/login' }}">
+                <div class="icon-flax flex items-center">
+                    <a href="{{ auth()->user() ? '/tasks' : '/login/create' }}">
                         <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor"
                              class="bi bi-journal-plus border-r pr-3 border-r-white mr-5 text-white" viewBox="0 0 16 16">
                             <path fill-rule="evenodd" d="M8 5.5a.5.5 0 0 1 .5.5v1.5H10a.5.5 0 0 1 0
@@ -50,12 +50,12 @@
                             <button type="submit">Log Out</button>
                         </form>
                     @else
-                        <div class="flex login">
-                            <a href="/register"
+                        <div class="flex items-center login">
+                            <a href="/register/create"
                                class="text-xs font-bold uppercase bg-blue-500 text-white p-2 register">
                                 Register
                             </a>
-                            <a href="/login" class="ml-3 text-white uppercase text-xs font-bold login">
+                            <a href="/login/create" class="ml-3 text-white uppercase text-xs font-bold login">
                                 Log In
                             </a>
                         </div>
