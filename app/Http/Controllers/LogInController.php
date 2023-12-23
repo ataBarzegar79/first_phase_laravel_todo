@@ -3,9 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreLogInRequest;
-use App\Http\Requests\StoreRequest;
 use Illuminate\Http\RedirectResponse;
-use  Illuminate\Support\Facades\Validator;
 
 class LogInController extends Controller
 {

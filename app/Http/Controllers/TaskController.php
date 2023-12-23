@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreTaskRequest;
 use App\Models\Task;
 
 class TaskController extends Controller
@@ -11,29 +12,25 @@ class TaskController extends Controller
         return view('task.form');
     }
 
-    public function store()
+    public function store(StoreTaskRequest $request)
     {
-        $attributes = \request()->validate([    // todo: you don't need \ before helper methods.
-            'title' => 'required|max:100',
-            'task_status' => 'required',
-            'description' => 'required',
-            'deadline' => 'required|date'
-        ]);
+        $attributes = $request->validated();
         $attributes['user_id'] = auth()->id();
         Task::create($attributes);
-        return redirect('tasks/create')->with('success', 'Save Work'); // todo: use named routes in your app : https://laravel.com/docs/10.x/controllers#main-content:~:text=return%20Redirect%3A%3Aroute(%27photos.index%27)
+        return redirect()->route('task.create')->with('success', 'Save Work'); // todo: use named routes in your app : https://laravel.com/docs/10.x/controllers#main-content:~:text=return%20Redirect%3A%3Aroute(%27photos.index%27)
     }
 
-    public function index(Task $task) //todo : when we deal with multiple items , we use the index method in the controller, so as defined you should deal with a single object (here  it is task ) ,also this style of using code is known as route model binding. However, you haven't implement it in your route.
+    public function index()
     {
-//        dd(
-//            auth()->user()->tasks()->latest('time')->filter(request(['search','select'])) //todo: since you aim to show list of tasks, it sound sensible to name it tasks not index.
-//            ->toSql()
-//        );
+        $task = auth()
+            ->user()
+            ->tasks()
+            ->latest('deadline')
+            ->filter(request(['search', 'select']))
+            ->simplePaginate(5)
+            ->withQueryString();
         return view('task.index', [
-            'task' => $task, // todo : you haven't this object within your view file.
-            'tasks' => auth()->user()->tasks()->latest('deadline')->filter(request(['search', 'select']))->simplePaginate(5) //todo: since you aim to show list of tasks, it sound sensible to name it tasks not index.
-            ->withQueryString() //todo : For a better code view , build your query and get results, then assign final tasks in a variable, then send it into your view.
+            'tasks' => $task
         ]);
     }
 
