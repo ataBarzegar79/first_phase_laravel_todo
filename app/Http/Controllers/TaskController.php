@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreTaskRequest;
+use App\Http\Requests\UpdateTaskRequest;
 use App\Models\Task;
 
 class TaskController extends Controller
@@ -44,14 +45,9 @@ class TaskController extends Controller
         return view('task.edit', ['task' => $task]);
     }
 
-    public function update(Task $task)
+    public function update(Task $task,UpdateTaskRequest $request)
     {
-        $attributes = \request()->validate([ // todo: you don't need \ before helper methods.
-            'title' => 'required|max:100',
-            'task_status' => 'required',
-            'description' => 'required',
-            'deadline' => 'required|date'
-        ]);// todo : you have to separate your validations in the request classes :https://laravel.com/docs/10.x/validation#main-content:~:text=Form%20Request%20Validation-,Creating%20Form%20Requests,-For%20more%20complex
+        $attributes = $request->validated(); // todo : you have to separate your validations in the request classes :https://laravel.com/docs/10.x/validation#main-content:~:text=Form%20Request%20Validation-,Creating%20Form%20Requests,-For%20more%20complex
         $attributes['user_id'] = auth()->id();
         $task->update($attributes);
         return redirect()->route('home')->with('success', 'update Work'); // todo: use named routes in your app : https://laravel.com/docs/10.x/controllers#main-content:~:text=return%20Redirect%3A%3Aroute(%27photos.index%27)
