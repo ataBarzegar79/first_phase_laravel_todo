@@ -24,8 +24,5 @@ class LogInController extends Controller
         }
 
         return redirect()->route('home')->with('success', __('message.login'));
-        // todo : you have to separate your validations in the request classes :https://laravel.com/docs/10.x/validation#main-content:~:text=Form%20Request%20Validation-,Creating%20Form%20Requests,-For%20more%20complex
-        // todo: use named routes in your app : https://laravel.com/docs/10.x/controllers#main-content:~:text=return%20Redirect%3A%3Aroute(%27photos.index%27)
-        // todo : use translation files within your project to show a plain text: https://laravel.com/docs/10.x/localization#main-content
     }
 }

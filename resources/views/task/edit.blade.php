@@ -24,7 +24,7 @@
                         </div>
 
                         <div class="col-span-full">
-                            <label for="description" class="block text-sm font-medium leading-6 text-gray-900">Slug</label>
+                            <label for="description" class="block text-sm font-medium leading-6 text-gray-900">Description</label>
                             <div class="mt-2">
                         <textarea id="description" name="description" rows="3"
                                   class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1
@@ -39,7 +39,8 @@
 
                         <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
                             <div class="sm:col-span-4">
-                                <label for="deadline" class="block text-sm font-medium leading-6 text-gray-900">Time :</label>
+                                <label for="deadline"
+                                       class="block text-sm font-medium leading-6 text-gray-900">Deadline</label>
                                 <div class="mt-2">
                                     <div class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2
                             focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
@@ -66,7 +67,8 @@
                         @enderror
                     </div>
                     <div class="mt-6 flex items-center justify-end gap-x-6">
-                        <a href="/index"><button type="button" class="text-sm font-semibold leading-6 text-gray-900">
+                        <a href="/index">
+                            <button type="button" class="text-sm font-semibold leading-6 text-gray-900">
                                 Cancel
                             </button>
                         </a>

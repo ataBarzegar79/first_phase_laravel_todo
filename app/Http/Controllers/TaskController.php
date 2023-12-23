@@ -21,7 +21,7 @@ class TaskController extends Controller
 
         Task::create($attributes);
 
-        return redirect()->route('task.create')->with('success', __('message.save')); // todo: use named routes in your app : https://laravel.com/docs/10.x/controllers#main-content:~:text=return%20Redirect%3A%3Aroute(%27photos.index%27)
+        return redirect()->route('task.create')->with('success', __('message.save'));
     }
 
     public function index()
@@ -52,18 +52,18 @@ class TaskController extends Controller
     public function update(Task $task, UpdateTaskRequest $request)
     {
         $attributes = $request->validated();
-        // todo : you have to separate your validations in the request classes :https://laravel.com/docs/10.x/validation#main-content:~:text=Form%20Request%20Validation-,Creating%20Form%20Requests,-For%20more%20complex
+
         $attributes['user_id'] = auth()->id();
 
         $task->update($attributes);
 
-        return redirect()->route('task.index')->with('success', __('messages.update')); // todo: use named routes in your app : https://laravel.com/docs/10.x/controllers#main-content:~:text=return%20Redirect%3A%3Aroute(%27photos.index%27)
-    }// todo : use translation files within your project to show a plain text: https://laravel.com/docs/10.x/localization#main-content
+        return redirect()->route('task.index')->with('success', __('messages.update'));
+    }
 
     public function delete(Task $task)
     {
         $task->delete();
 
-        return back()->with('success',  __('messages.delete')); // todo : use translation files within your project to show a plain text: https://laravel.com/docs/10.x/localization#main-content
+        return back()->with('success',  __('messages.delete'));
     }
 }
