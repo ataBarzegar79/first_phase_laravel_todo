@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -43,7 +44,8 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-    public function tasks(){
-        return $this->hasMany(Task::class); //todo : A wrong way of determining relations in your projects : this should be a one to many relation, a user can have many tasks; however, you have defined the relation right within your migration. I recommend you to study the relations from given resource again, then you can read this piece of document: https://laravel.com/docs/10.x/eloquent-relationships#one-to-many:~:text=%7D-,One%20To%20Many,-A%20one%2Dto
+    public function tasks() :HasMany
+    {
+        return $this->hasMany(Task::class);
     }
 }

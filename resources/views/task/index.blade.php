@@ -24,20 +24,20 @@
                 </tr>
                 </thead>
                 <tbody>
-                @foreach($index as $task)
+                @foreach($tasks as $task)
                     @if(auth()->user()->id == $task->user_id)
                         <tr class="border w-full">
                             <td class="title">
-                                <a href="/show/{{$task->id}}" class="ml-2">
+                                <a href="/tasks/{{$task->id}}" class="ml-2">
                                     {{ $task->title }}
                                 </a>
                             </td>
                             <td class="pr-11">
-                                <a>{{$task->select}}</a>
+                                <a>{{$task->task_status}}</a>
                             </td>
-                            <td class="pr-11 text-blue-700"><a href="/edit/{{ $task->id }}">update</a></td>
+                            <td class="pr-11 text-blue-700"><a href="/tasks/{{ $task->id }}/edit">update</a></td>
                             <td class="pr-8 text-red-700">
-                                <form action="/delete/{{ $task->id }}" method="POST">
+                                <form action="/tasks/{{ $task->id }}" method="POST">
                                     @csrf
                                     @method('DELETE')
                                     <button>delete</button>
@@ -49,7 +49,7 @@
                 </tbody>
             </table>
             <p class="mt-3">
-                {{ $index->links() }}
+                {{ $tasks ->links() }}
             </p>
         </main>
     </section>

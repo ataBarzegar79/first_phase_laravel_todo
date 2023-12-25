@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LogInController;
+use App\Http\Controllers\LogOutController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\TaskController;
 use Illuminate\Support\Facades\Route;
@@ -15,28 +17,24 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-//todo: you have to always use names with your routes : https://laravel.com/docs/10.x/routing#named-routes
-Route::get('/', function () {
-    return view('task.form'); // todo : send the logic into controllers even if they are just 2 lines of code.
-});
+Route::get('/', [HomeController::class, 'create'])->name('home');
 
-Route::get('register',[RegisterController::class,'create']);
-Route::post('register',[RegisterController::class,'store']);
+Route::get('register/create', [RegisterController::class, 'create'])->name('register.create');
+Route::post('register', [RegisterController::class, 'store'])->name('register');
 
-Route::get('login',[LogInController::class,'create']);
-Route::post('login',[LogInController::class,'store']);
-Route::post('logout',[LogInController::class,'dectory']); //  todo : if this controller also can log out user, why have you set a LogInController name to it ?
-// todo : what is the meaning of dectory here ? you have to always use meaningful names.
-Route::get('form',[TaskController::class,'create']); // todo : your names for your routes do not follow standards of a restful app !
-Route::post('form',[TaskController::class,'store']); // todo : your names for your routes do not follow standards of a restful  app !
+Route::get('login/create', [LogInController::class, 'create'])->name('login.create');
+Route::post('login', [LogInController::class, 'store'])->name('login');
 
-Route::get('index',[TaskController::class,'index']);
-Route::get('/show/{task:id}',[TaskController::class,'show']);  // todo : in your routes , you don't need  / before first resource name it should be like  show/{task:id}.
-// todo : you don' need id when working with task itself, you can just omit it : show/{task}   ----> https://laravel.com/docs/10.x/routing#route-model-binding:~:text=%7D)%3B-,Route%20Model%20Binding,-When%20injecting%20a
-Route::get('/edit/{task}',[TaskController::class,'edit']); //todo : in your routes , you don't need  / before first resource name it should be like  show/{task:id}.
-Route::patch('/edit/{task}',[TaskController::class,'update']);//todo : in your routes , you don't need  / before first resource name it should be like  show/{task:id}.
+Route::post('logout', [LogOutController::class, 'destroy'])->name('logout');
 
-Route::delete('/delete/{task}',[TaskController::class,'delete']);//todo : in your routes , you don't need  / before first resource name it should be like  show/{task:id}.
+Route::get('tasks/create', [TaskController::class, 'create'])->name('task.create');
+Route::post('tasks', [TaskController::class, 'store'])->name('task');
 
+Route::get('tasks', [TaskController::class, 'index'])->name('task.index');
+Route::get('tasks/{task}', [TaskController::class, 'show'])->name('task.show');
 
-// todo : define standard route names in your task resource, this resource may help you : https://laravel.com/docs/10.x/controllers#:~:text=Actions%20Handled%20By%20Resource%20Controller  ----> this can be an true example of route name choices
+Route::get('tasks/{task}/edit', [TaskController::class, 'edit'])->name('task.edit');
+Route::patch('tasks/{task}', [TaskController::class, 'update'])->name('task.update');
+
+Route::delete('tasks/{task}', [TaskController::class, 'delete'])->name('delete');
+

@@ -13,7 +13,7 @@
                     <div class="col-span-full">
                         <label for="slug" class="block text-sm font-medium leading-6 text-gray-900">Slug :</label>
                         <div class="mt-2">
-                            <p class="block text-sm font-medium leading-6 text-gray-900">{{ $task->slug }}</p>
+                            <p class="block text-sm font-medium leading-6 text-gray-900">{{ $task->description }}</p>
                         </div>
                     </div>
 
@@ -21,7 +21,7 @@
                         <div class="sm:col-span-4">
                             <label for="time" class="block text-sm font-medium leading-6 text-gray-900">Time :</label>
                             <div class="mt-2">
-                                <p class="block text-sm font-medium leading-6 text-gray-900">{{ $task->time }}</p>
+                                <p class="block text-sm font-medium leading-6 text-gray-900">{{ $task->deadline }}</p>
                             </div>
                         </div>
                     </div>
