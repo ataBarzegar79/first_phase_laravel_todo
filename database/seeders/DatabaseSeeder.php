@@ -12,10 +12,14 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-//         \App\Models\User::factory(10)->create();
-
-         \App\Models\Task::factory(500)->create([
-
-         ]);
+         \App\Models\User::factory(10)->create();
+         $i = 1;
+         while ($i <= 11)
+         {
+             \App\Models\Task::factory(10)->create([
+                 'user_id' => $i,
+             ]);
+             $i++;
+         }
     }
 }

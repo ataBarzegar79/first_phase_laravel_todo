@@ -18,7 +18,7 @@ class TaskFactory extends Factory
     public function definition(): array
     {
         return [
-            'title' => $this->faker->title(),
+            'title' => $this->faker->word(),
             'body' => $this->faker->paragraph(),
             'starting_time' => $startingTime = $this->faker->dateTime(),
             'finishing_time' => $this->faker->dateTimeBetween($startingTime,  $startingTime->modify('+4 hours')),
