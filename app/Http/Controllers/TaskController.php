@@ -33,7 +33,13 @@ class TaskController extends Controller
 
     public function index()
     {
-        $tasks = Task::where('user_id', auth()->user()->id)->paginate(10);
+        $sort = request('sort', 'created_at'); // get the sort parameter or use the default value 'created_at'
+        $order = request('order', 'desc'); // get the order parameter or use the default value 'desc'
+        $filter = request('filter', null); // get the filter parameter or use the default value null
+        if($filter)
+            $tasks = Task::where('user_id', auth()->user()->id)->orderBy($sort, $order)->where('status', $filter)->paginate(10);
+        else
+            $tasks = Task::where('user_id', auth()->user()->id)->orderBy($sort, $order)->paginate(10);
         return view('manage', compact('tasks'));
     }
 
