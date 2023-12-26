@@ -20,6 +20,7 @@ return new class extends Migration
             $table->timestamp('finishing_time');
             $table->string('slug', 100);
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
+            $table->boolean('status');
         });
     }
 

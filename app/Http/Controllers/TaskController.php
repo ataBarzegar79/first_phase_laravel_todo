@@ -12,7 +12,6 @@ class TaskController extends Controller
     public function store()
     {
         \request()->validate([
-            'body'=> 'required',
             'title' => 'required',
             'start_time' => 'required|date',
             'end_time' => 'required|date|after_or_equal:start_time',
@@ -26,6 +25,7 @@ class TaskController extends Controller
             'starting_time' => \request('start_time'),
             'finishing_time' => \request('end_time'),
             'slug' => Str::slug(\request('title'), '-'),
+            'status' => false
         ]);
         session()->flash('success', 'Task Added Successfully!');
         return to_route('manage');
