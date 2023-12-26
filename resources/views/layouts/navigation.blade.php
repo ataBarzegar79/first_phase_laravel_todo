@@ -20,16 +20,8 @@
                         {{ __('Create') }}
                     </x-nav-link>
 
-                    <x-nav-link :href="route('update')" :active="request()->routeIs('update')">
-                        {{ __('Update') }}
-                    </x-nav-link>
-
-                    <x-nav-link :href="route('show-all')" :active="request()->routeIs('show-all')">
-                        {{ __('Show All') }}
-                    </x-nav-link>
-
-                    <x-nav-link :href="route('delete')" :active="request()->routeIs('delete')">
-                        {{ __('Delete') }}
+                    <x-nav-link :href="route('manage')" :active="request()->routeIs('manage')">
+                        {{ __('Manage All Tasks') }}
                     </x-nav-link>
 
                 </div>

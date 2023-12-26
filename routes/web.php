@@ -25,9 +25,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', function () {return view('dashboard');})->name('dashboard');
     Route::get('/dashboard/create', function () {return view('create');})->name('create');
     Route::post('/dashboard/create', [TaskController::class, 'store']);
-    Route::get('/dashboard/update', function () {return view('update');})->name('update');
-    Route::get('/dashboard/show-all', function () {return view('show-all');})->name('show-all');
-    Route::get('/dashboard/delete', function () {return view('delete');})->name('delete');
+    Route::get('/dashboard/manage', [TaskController::class, 'index'])->name('manage');
+    Route::post('/dashboard/delete/{task:id}', [TaskController::class, 'destroy'])->name('destroy');
+    Route::get('/dashboard/update/{task:id}', function ($id){return view('update', ["task_id" => $id]);})->name('update');
 });
 
 Route::middleware('auth')->group(function () {
