@@ -4,7 +4,7 @@
             {{ __('All your Tasks are shown here.') }}
         </h2>
         <h3 class="font-semibold text-sm text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('You can manage them here.') }}
+            {{ __('You can manage this week\'s tasks here.') }}
         </h3>
     </x-slot>
 
@@ -48,7 +48,7 @@
         }, 10000);
     </script>
 
-    <form action="/dashboard/manage" method="get" class="bg-gray-800 p-4 rounded-lg">
+    <form action="{{ route('manage') }}" method="get" class="bg-gray-800 p-4 rounded-lg">
         <div class="flex items-center space-x-10 justify-center">
 
             <div class="container">
@@ -109,6 +109,7 @@
                             <th class="px-4 py-2" >Starting Time</th>
                             <th class="px-4 py-2" >Finishing Time</th>
                             <th class="px-4 py-2" >Status</th>
+                            <th class="px-4 py-2" >Completed at</th>
                             <th class="px-4 py-2" >Actions</th>
                         </tr>
                         </thead>
@@ -122,7 +123,11 @@
                                     {
                                         $status = "Done";
                                     }
-                            @endphp
+                                if (!$task->status)
+                                    $completed_at = "Not Done Yet";
+                                else $completed_at = $task->completed_at;
+                        @endphp
+
                             <tr>
                                 <td class="border px-4 py-2">{{ $task->title }}</td>
                                 <td class="border px-4 py-2">{{ $task->body }}</td>
@@ -130,16 +135,17 @@
                                 <td class="border px-4 py-2">{{ $task->starting_time }}</td>
                                 <td class="border px-4 py-2">{{ $task->finishing_time }}</td>
                                 <td class="border px-4 py-2">{{ $status }}</td>
+                                <td class="border px-4 py-2">{{ $completed_at }}</td>
                                 <td class="border px-4 py-2">
                                     <!-- Add some buttons to edit or delete the tasks -->
                                     <!-- Use the bg-green-500 class for the update button -->
-                                    <form action="/dashboard/update/{{$task->id}}" method="GET" class="inline-block">
+                                    <form action="{{ route('update', $task->slug) }}" method="GET" class="inline-block">
                                         @csrf
                                         @method('GET')
                                         <button type="submit" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Update</button>
                                     </form>
                                     <!-- Use the bg-red-500 class for the delete button -->
-                                    <form method="POST" action="/dashboard/delete/{{$task->id}}" class="inline-block">
+                                    <form method="POST" action="{{ route('destroy', $task->slug) }}" class="inline-block">
                                         @csrf
                                         <button type="submit" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Delete</button>
                                     </form>

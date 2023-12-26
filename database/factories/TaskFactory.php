@@ -21,6 +21,12 @@ class TaskFactory extends Factory
         $startingTime = $this->faker->dateTime();
         $endingTime = $startingTime;
         $endingTime->add(new DateInterval('PT4H'));
+
+        $status = $this->faker->boolean();
+        if ($status)
+            $completedAt = $endingTime;
+        else $completedAt = null;
+
         return [
             'title' => $this->faker->word(),
             'body' => $this->faker->paragraph(),
@@ -28,7 +34,8 @@ class TaskFactory extends Factory
             'finishing_time' => $endingTime,
             'slug' => \Illuminate\Support\Str::limit($this->faker->slug(), 20),
             'user_id' => User::factory(),
-            'status' => $this->faker->boolean()
+            'status' => $status,
+            'completed_at' => $completedAt,
         ];
     }
 }

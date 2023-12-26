@@ -25,7 +25,8 @@ class TaskController extends Controller
             'starting_time' => \request('start_time'),
             'finishing_time' => \request('end_time'),
             'slug' => Str::slug(\request('title'), '-'),
-            'status' => false
+            'status' => false,
+            'completed_at' => null,
         ]);
         session()->flash('success', 'Task Added Successfully!');
         return to_route('manage');
@@ -37,16 +38,16 @@ class TaskController extends Controller
         $order = request('order', 'desc'); // get the order parameter or use the default value 'desc'
         $filter = request('filter', null); // get the filter parameter or use the default value null
         if($filter)
-            $tasks = Task::where('user_id', auth()->user()->id)->orderBy($sort, $order)->where('status', $filter)->paginate(10);
+            $tasks = Task::where('user_id', auth()->user()->id)->whereDate('finishing_time', '>', now()->subWeek())->orderBy($sort, $order)->where('status', $filter)->paginate(10);
         else
-            $tasks = Task::where('user_id', auth()->user()->id)->orderBy($sort, $order)->paginate(10);
+            $tasks = Task::where('user_id', auth()->user()->id)->whereDate('finishing_time', '>', now()->subWeek())->orderBy($sort, $order)->paginate(10);
         return view('manage', compact('tasks'));
     }
 
-    public function destroy($id)
+    public function destroy($slug)
     {
-        // Find the task by its id
-        $task = Task::findOrFail($id);
+        // Find the task by its slug
+        $task = Task::where('slug', $slug)->firstOrFail();
 
         // Delete the task from the database
         $task->delete();

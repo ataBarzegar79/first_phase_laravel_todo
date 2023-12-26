@@ -19,15 +19,13 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-
-
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', function () {return view('dashboard');})->name('dashboard');
-    Route::get('/dashboard/create', function () {return view('create');})->name('create');
-    Route::post('/dashboard/create', [TaskController::class, 'store']);
-    Route::get('/dashboard/manage', [TaskController::class, 'index'])->name('manage');
-    Route::post('/dashboard/delete/{task:id}', [TaskController::class, 'destroy'])->name('destroy');
-    Route::get('/dashboard/update/{task:id}', function ($id){return view('update', ["task_id" => $id]);})->name('update');
+    Route::get('/dashboard/tasks/create', function () {return view('create');})->name('create');
+    Route::post('/dashboard/tasks/create', [TaskController::class, 'store']);
+    Route::get('/dashboard/tasks/manage', [TaskController::class, 'index'])->name('manage');
+    Route::post('/dashboard/tasks/delete/{task:slug}', [TaskController::class, 'destroy'])->name('destroy');
+    Route::get('/dashboard/tasks/update/{task:slug}', function ($id){return view('update');})->name('update');
 });
 
 Route::middleware('auth')->group(function () {
