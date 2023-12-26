@@ -9,6 +9,11 @@ use Str;
 
 class TaskController extends Controller
 {
+
+    public function create()
+    {
+        return view('create');
+    }
     public function store()
     {
         \request()->validate([
@@ -37,7 +42,7 @@ class TaskController extends Controller
         $sort = request('sort', 'created_at'); // get the sort parameter or use the default value 'created_at'
         $order = request('order', 'desc'); // get the order parameter or use the default value 'desc'
         $filter = request('filter', null); // get the filter parameter or use the default value null
-        if($filter)
+        if($filter !== null)
             $tasks = Task::where('user_id', auth()->user()->id)->whereDate('finishing_time', '>', now()->subWeek())->orderBy($sort, $order)->where('status', $filter)->paginate(10);
         else
             $tasks = Task::where('user_id', auth()->user()->id)->whereDate('finishing_time', '>', now()->subWeek())->orderBy($sort, $order)->paginate(10);
@@ -56,4 +61,31 @@ class TaskController extends Controller
         session()->flash('success', 'Task deleted successfully!');
         return redirect()->route('manage');
     }
+
+    public function edit($slug)
+    {
+        $task = Task::where('slug', $slug)->firstOrFail();
+        return view('update', ["task" => $task]);
+    }
+
+    public function update($slug)
+    {
+        $task = Task::where('slug', $slug)->firstOrFail();
+
+        \request()->validate([
+            'title' => 'required',
+            'starting_time' => 'required|date',
+            'finishing_time' => 'required|date|after_or_equal:start_time',
+            'status' => 'boolean',
+        ]);
+
+        $task->fill(request()->all());
+        $task->completed_at = now();
+
+        $task->save();
+
+        session()->flash('success', 'Task Updated Successfully!');
+        return to_route('manage');
+    }
+
 }

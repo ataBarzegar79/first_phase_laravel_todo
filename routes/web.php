@@ -21,11 +21,16 @@ Route::get('/', function () {
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', function () {return view('dashboard');})->name('dashboard');
-    Route::get('/dashboard/tasks/create', function () {return view('create');})->name('create');
+
+    Route::get('/dashboard/tasks/create', [TaskController::class, 'create'])->name('create');
     Route::post('/dashboard/tasks/create', [TaskController::class, 'store']);
+
     Route::get('/dashboard/tasks/manage', [TaskController::class, 'index'])->name('manage');
+
     Route::post('/dashboard/tasks/delete/{task:slug}', [TaskController::class, 'destroy'])->name('destroy');
-    Route::get('/dashboard/tasks/update/{task:slug}', function ($id){return view('update');})->name('update');
+
+    Route::get('/dashboard/tasks/update/{task:slug}', [TaskController::class, 'edit'])->name('update');
+    Route::post('/dashboard/tasks/update/{task:slug}', [TaskController::class, 'update']);
 });
 
 Route::middleware('auth')->group(function () {
