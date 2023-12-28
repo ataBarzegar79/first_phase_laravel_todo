@@ -106,8 +106,8 @@
                             <th class="px-4 py-2" >Title</th>
                             <th class="px-4 py-2" >Description</th>
                             <th class="px-4 py-2" >Created at</th>
-                            <th class="px-4 py-2" >Starting Time</th>
-                            <th class="px-4 py-2" >Finishing Time</th>
+                            <th class="px-4 py-2" >Starts at</th>
+                            <th class="px-4 py-2" >Ends at</th>
                             <th class="px-4 py-2" >Status</th>
                             <th class="px-4 py-2" >Completed at</th>
                             <th class="px-4 py-2" >Actions</th>
@@ -127,8 +127,8 @@
                                 <td class="border px-4 py-2">{{ $task->title }}</td>
                                 <td class="border px-4 py-2">{{ $task->body }}</td>
                                 <td class="border px-4 py-2">{{ $task->created_at }}</td>
-                                <td class="border px-4 py-2">{{ $task->starting_time }}</td>
-                                <td class="border px-4 py-2">{{ $task->finishing_time }}</td>
+                                <td class="border px-4 py-2">{{ $task->started_at }}</td>
+                                <td class="border px-4 py-2">{{ $task->ended_at }}</td>
                                 <td class="border px-4 py-2">{{ $task->status }}</td>
                                 <td class="border px-4 py-2">{{ $completed_at }}</td>
                                 <td class="border px-4 py-2">

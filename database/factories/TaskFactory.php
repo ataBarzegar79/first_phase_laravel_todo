@@ -30,8 +30,8 @@ class TaskFactory extends Factory
         return [
             'title' => $this->faker->word(),
             'body' => $this->faker->paragraph(),
-            'starting_time' => $startingTime,
-            'finishing_time' => $endingTime,
+            'started_at' => $startingTime,
+            'ended_at' => $endingTime,
             'slug' => \Illuminate\Support\Str::limit($this->faker->slug(), 20),
             'user_id' => User::factory(),
             'status' => $status,

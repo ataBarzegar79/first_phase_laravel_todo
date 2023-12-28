@@ -17,8 +17,8 @@ return new class extends Migration
             $table->timestamps();
             $table->text('title');
             $table->text('body');
-            $table->timestamp('starting_time');
-            $table->timestamp('finishing_time');
+            $table->timestamp('started_at');
+            $table->timestamp('ended_at');
             $table->string('slug', 100);
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->enum('status', ['Done', 'In Progress'])->default('In Progress');

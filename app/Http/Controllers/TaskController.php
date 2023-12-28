@@ -27,8 +27,8 @@ class TaskController extends Controller
             'user_id' => \request()->user()->id,
             'title' => \request('title'),
             'body' => \request('body'),
-            'starting_time' => \request('start_time'),
-            'finishing_time' => \request('end_time'),
+            'started_at' => \request('start_time'),
+            'ended_at' => \request('end_time'),
             'slug' => Str::slug(\request('title'), '-'),
             'status' => 'In Progress',
             'completed_at' => null,
@@ -47,7 +47,7 @@ class TaskController extends Controller
 //        dd($filter);
 
         $tasks = Task::where('user_id', auth()->user()->id)
-            ->whereDate('finishing_time', '>', now()->subWeek())
+            ->whereDate('ended_at', '>', now()->subWeek())
             ->orderBy($sort, $order);
 
 //        if($filter === null)
@@ -86,8 +86,8 @@ class TaskController extends Controller
 
         request()->validate([
             'title' => 'required',
-            'starting_time' => 'required|date',
-            'finishing_time' => 'required|date|after_or_equal:start_time',
+            'started_at' => 'required|date',
+            'ended_at' => 'required|date|after_or_equal:start_time',
             'status' => 'string',
         ]);
 
