@@ -3,8 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Task;
-use DateTime;
-use Illuminate\Http\Request;
 use Str;
 
 class TaskController extends Controller
@@ -39,14 +37,26 @@ class TaskController extends Controller
 
     public function index()
     {
+//        $user = request()->user()->tasks();
         $sort = request('sort', 'created_at'); // get the sort parameter or use the default value 'created_at'
         $order = request('order', 'desc'); // get the order parameter or use the default value 'desc'
         $filter = request('filter', null); // get the filter parameter or use the default value null
+
+        $tasks = Task::where('user_id', auth()->user()->id)
+            ->whereDate('finishing_time', '>', now()->subWeek())
+            ->orderBy($sort, $order);
+
         if($filter !== null)
-            $tasks = Task::where('user_id', auth()->user()->id)->whereDate('finishing_time', '>', now()->subWeek())->orderBy($sort, $order)->where('status', $filter)->paginate(10);
-        else
-            $tasks = Task::where('user_id', auth()->user()->id)->whereDate('finishing_time', '>', now()->subWeek())->orderBy($sort, $order)->paginate(10);
-        return view('manage', compact('tasks'));
+            $tasks = $tasks->where('status', $filter);
+
+        $tasks = $tasks->paginate(10);
+
+        $tasks = $tasks->get();
+
+        return view('manage',
+        [
+            'tasks' => $tasks
+        ]);
     }
 
     public function destroy($slug)
@@ -72,7 +82,7 @@ class TaskController extends Controller
     {
         $task = Task::where('slug', $slug)->firstOrFail();
 
-        \request()->validate([
+        request()->validate([
             'title' => 'required',
             'starting_time' => 'required|date',
             'finishing_time' => 'required|date|after_or_equal:start_time',

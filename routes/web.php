@@ -19,18 +19,18 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::middleware(['auth', 'verified'])->group(function () {
-    Route::get('/dashboard', function () {return view('dashboard');})->name('dashboard');
+Route::middleware(['auth', 'verified'])->prefix('dashboard')->group(function () {
+    Route::get('/', function () {return view('dashboard');})->name('dashboard');
 
-    Route::get('/dashboard/tasks/create', [TaskController::class, 'create'])->name('create');
-    Route::post('/dashboard/tasks/create', [TaskController::class, 'store']);
+    Route::get('tasks/create', [TaskController::class, 'create'])->name('create');
+    Route::post('tasks/create', [TaskController::class, 'store']);
 
-    Route::get('/dashboard/tasks/manage', [TaskController::class, 'index'])->name('manage');
+    Route::get('tasks/manage', [TaskController::class, 'index'])->name('manage');
 
-    Route::post('/dashboard/tasks/delete/{task:slug}', [TaskController::class, 'destroy'])->name('destroy');
+    Route::post('tasks/delete/{task:slug}', [TaskController::class, 'destroy'])->name('destroy');
 
-    Route::get('/dashboard/tasks/update/{task:slug}', [TaskController::class, 'edit'])->name('update');
-    Route::post('/dashboard/tasks/update/{task:slug}', [TaskController::class, 'update']);
+    Route::get('update/{task:slug}', [TaskController::class, 'edit'])->name('update');
+    Route::post('tasks/update/{task:slug}', [TaskController::class, 'update']);
 });
 
 Route::middleware('auth')->group(function () {
@@ -40,3 +40,4 @@ Route::middleware('auth')->group(function () {
 });
 
 require __DIR__.'/auth.php';
+
