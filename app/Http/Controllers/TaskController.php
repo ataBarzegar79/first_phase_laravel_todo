@@ -30,7 +30,7 @@ class TaskController extends Controller
             'starting_time' => \request('start_time'),
             'finishing_time' => \request('end_time'),
             'slug' => Str::slug(\request('title'), '-'),
-            'status' => false,
+            'status' => 'In Progress',
             'completed_at' => null,
         ]);
         session()->flash('success', 'Task Added Successfully!');
@@ -42,14 +42,16 @@ class TaskController extends Controller
 //        $user = request()->user()->tasks();
         $sort = request('sort', 'created_at'); // get the sort parameter or use the default value 'created_at'
         $order = request('order', 'desc'); // get the order parameter or use the default value 'desc'
-        $filter = request('filter', null); // get the filter parameter or use the default value null
+//        $filter = request('filter', null); // get the filter parameter or use the default value null
+
+//        dd($filter);
 
         $tasks = Task::where('user_id', auth()->user()->id)
             ->whereDate('finishing_time', '>', now()->subWeek())
             ->orderBy($sort, $order);
 
-        if($filter !== null)
-            $tasks = $tasks->where('status', $filter);
+//        if($filter === null)
+//            $tasks = $tasks->where('status', $filter);
 
         $tasks = $tasks->paginate(10);
 
@@ -80,13 +82,13 @@ class TaskController extends Controller
 
     public function update(Task $task)
     {
-        $task = Task::where('slug', $task->id)->firstOrFail();
+        $task = Task::where('id', $task->id)->firstOrFail();
 
         request()->validate([
             'title' => 'required',
             'starting_time' => 'required|date',
             'finishing_time' => 'required|date|after_or_equal:start_time',
-            'status' => 'boolean',
+            'status' => 'string',
         ]);
 
         $task->fill(request()->all());

@@ -43,12 +43,14 @@
 
                         <div class="mb-4">
                             <label for="status" class="block text-white text-sm font-bold mb-2">Status</label>
-                            <input type="checkbox" name="status" id="status" value="1" {{ old('status', $task->status) ? 'checked' : '' }}">
+                            <input type="hidden" name="status" value="In Progress">
+                            <input type="checkbox" name="status" id="status" value="Done" {{ old('status', $task->status) == "Done" ? 'checked' : '' }}>
                             <span class="container text-white text-sm">Task Completed</span>
                             @error('status')
                             <span class="text-red-500 text-xs italic">{{ $message }}</span>
                             @enderror
                         </div>
+
                         <style>
                             .container {
                                 margin-left: 5px;

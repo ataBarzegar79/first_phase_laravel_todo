@@ -118,12 +118,7 @@
                         <!-- Loop through the tasks and display their details -->
                         @foreach ($tasks as $task)
                             @php
-                                $status = "In Progress";
-                                if ($task->status)
-                                    {
-                                        $status = "Done";
-                                    }
-                                if (!$task->status)
+                                if ($task->status === 'In Progress')
                                     $completed_at = "Not Done Yet";
                                 else $completed_at = $task->completed_at;
                         @endphp
@@ -134,7 +129,7 @@
                                 <td class="border px-4 py-2">{{ $task->created_at }}</td>
                                 <td class="border px-4 py-2">{{ $task->starting_time }}</td>
                                 <td class="border px-4 py-2">{{ $task->finishing_time }}</td>
-                                <td class="border px-4 py-2">{{ $status }}</td>
+                                <td class="border px-4 py-2">{{ $task->status }}</td>
                                 <td class="border px-4 py-2">{{ $completed_at }}</td>
                                 <td class="border px-4 py-2">
                                     <!-- Add some buttons to edit or delete the tasks -->

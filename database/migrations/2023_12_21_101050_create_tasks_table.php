@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\StatusEnum;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -20,7 +21,7 @@ return new class extends Migration
             $table->timestamp('finishing_time');
             $table->string('slug', 100);
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
-            $table->boolean('status');
+            $table->enum('status', ['Done', 'In Progress'])->default('In Progress');
             $table->timestamp('completed_at')->nullable();
         });
     }
