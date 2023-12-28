@@ -11,13 +11,13 @@ class TaskSeeder extends Seeder
 {
     public function run(): void
     {
-        $user = User::factory()->create([
-            'name' => 'sajjad',
-            'email' => 'mohammadisajjad54@gmail.com',
-            'password' => bcrypt('12345678'),
-        ]);
+//        $user = User::factory()->create([
+//            'name' => 'sajjad',
+//            'email' => 'mohammadisajjad54@gmail.com',
+//            'password' => bcrypt('12345678'),
+//        ]);
         Task::factory(12)->create([
-            'user_id' => $user
+            'user_id' => 1
         ]);
     }
 }
