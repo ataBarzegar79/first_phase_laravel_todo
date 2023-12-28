@@ -23,14 +23,14 @@ Route::middleware(['auth', 'verified'])->prefix('dashboard')->group(function () 
     Route::get('/', function () {return view('dashboard');})->name('dashboard');
 
     Route::get('tasks/create', [TaskController::class, 'create'])->name('create');
-    Route::post('tasks/create', [TaskController::class, 'store']);
+    Route::post('tasks/create', [TaskController::class, 'store'])->name('store');
 
     Route::get('tasks/manage', [TaskController::class, 'index'])->name('manage');
 
     Route::post('tasks/delete/{task:slug}', [TaskController::class, 'destroy'])->name('destroy');
 
-    Route::get('update/{task:slug}', [TaskController::class, 'edit'])->name('update');
-    Route::post('tasks/update/{task:slug}', [TaskController::class, 'update']);
+    Route::get('update/{task:slug}', [TaskController::class, 'edit'])->name('edit');
+    Route::post('tasks/update/{task:slug}', [TaskController::class, 'update'])->name('update');
 });
 
 Route::middleware('auth')->group(function () {

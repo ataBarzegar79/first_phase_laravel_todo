@@ -12,6 +12,8 @@ class TaskController extends Controller
     {
         return view('create');
     }
+
+
     public function store()
     {
         \request()->validate([
@@ -51,36 +53,34 @@ class TaskController extends Controller
 
         $tasks = $tasks->paginate(10);
 
-        $tasks = $tasks->get();
-
         return view('manage',
         [
             'tasks' => $tasks
         ]);
     }
 
-    public function destroy($slug)
+    public function destroy(Task $task)
     {
-        // Find the task by its slug
-        $task = Task::where('slug', $slug)->firstOrFail();
+        // Find the task by its id
+        $task = Task::where('id', $task->id)->firstOrFail();
 
         // Delete the task from the database
         $task->delete();
 
         // Redirect back to the manage view with a success message
         session()->flash('success', 'Task deleted successfully!');
-        return redirect()->route('manage');
+        return to_route('manage');
     }
 
-    public function edit($slug)
+    public function edit(Task $task)
     {
-        $task = Task::where('slug', $slug)->firstOrFail();
+        $task = Task::where('id', $task->id)->firstOrFail();
         return view('update', ["task" => $task]);
     }
 
-    public function update($slug)
+    public function update(Task $task)
     {
-        $task = Task::where('slug', $slug)->firstOrFail();
+        $task = Task::where('slug', $task->id)->firstOrFail();
 
         request()->validate([
             'title' => 'required',

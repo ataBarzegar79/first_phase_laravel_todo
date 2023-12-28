@@ -139,7 +139,7 @@
                                 <td class="border px-4 py-2">
                                     <!-- Add some buttons to edit or delete the tasks -->
                                     <!-- Use the bg-green-500 class for the update button -->
-                                    <form action="{{ route('update', $task->slug) }}" method="GET" class="inline-block">
+                                    <form action="{{ route('edit', $task->slug) }}" method="GET" class="inline-block">
                                         @csrf
                                         @method('GET')
                                         <button type="submit" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Update</button>
