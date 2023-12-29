@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreTaskRequest;
 use App\Http\Requests\UpdateTaskRequest;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use App\Models\{Task};
 use Str;
 
