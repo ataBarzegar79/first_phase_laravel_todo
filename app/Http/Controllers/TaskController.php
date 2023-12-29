@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Task;
+use Illuminate\Support\Facades\Auth;
+use App\Models\{Task};
 use Str;
 
 class TaskController extends Controller
@@ -39,27 +40,26 @@ class TaskController extends Controller
 
     public function index()
     {
-//        $user = request()->user()->tasks();
         $sort = request('sort', 'created_at'); // get the sort parameter or use the default value 'created_at'
         $order = request('order', 'desc'); // get the order parameter or use the default value 'desc'
-//        $filter = request('filter', null); // get the filter parameter or use the default value null
+        // $filter = request('filter', null); // get the filter parameter or use the default value null
 
-//        dd($filter);
-
-        $tasks = Task::where('user_id', auth()->user()->id)
+        $tasks = Task::whereHas('user', function ($query) {
+            $query->whereKey(Auth::user()->tasks()->pluck('id'));
+        })
             ->whereDate('ended_at', '>', now()->subWeek())
-            ->orderBy($sort, $order);
+            ->orderBy($sort, $order)
+            ->paginate(10); // paginate the query results by 10 per page
 
-//        if($filter === null)
-//            $tasks = $tasks->where('status', $filter);
-
-        $tasks = $tasks->paginate(10);
+        // if($filter === null)
+        //     $tasks = $tasks->where('status', $filter);
 
         return view('manage',
-        [
-            'tasks' => $tasks
-        ]);
+            [
+                'tasks' => $tasks
+            ]);
     }
+
 
     public function destroy(Task $task)
     {
