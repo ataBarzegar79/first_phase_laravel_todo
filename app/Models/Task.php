@@ -17,39 +17,23 @@ class Task extends Model
         'status' => TaskStatus::class,
     ];
 
-    public function scopeFilter($query, array $filters): void
+    public function scopeSearch($query, ?string $content): void
     {
-        $query->when($filters['search'] ?? false,
-            fn($query, $search) => $query->where(
-                fn($query) => $query->where('title', 'like', '%' . $search . '%')
-                    ->orWhere('description', 'like', '%' . $search . '%')
-            )
-        );
-        $query->when($filters['status'] ?? false, //todo : this part of your query looks to be unnecessary or even wrong since you have only 2 types of statuses
-            fn($query, $status) => $query->where(
-                fn($query) => $query->where('status', 'like', $status)
-            )
+        $query->when($content ?? false,
+            fn($query, $content) => $query
+                ->where('title', 'like', '%' . $content . '%')
+                ->orWhere('description', 'like', '%' . $content . '%')
         );
     }
 
     public function scopeIncomplete(Builder $query): void
     {
-        $query->where('status', '=', 'INCOMPLETE'); //todo: you haven't used your defined enum.
+        $query->where('status', '=', TaskStatus::Incomplete->value);
     }
 
     public function scopeComplete(Builder $query): void
     {
-        $query->where('status', '=', 'COMPLETE') //todo: you haven't used your defined enum.
-            ->where('completed_on', '>', Carbon::now()->subDays(Config::get('view.completeDay')));
-    }
-
-    public function scopeTitleHas(Builder $query, string $title)
-    {
-        $query->where('title', 'like', '%' . $title . '%');
-    }
-
-    public function scopeDescriptionHas(Builder $query, string $description)
-    {
-        $query->where('description', 'like', '%' . $description . '%');
+        $query->where('status', '=', TaskStatus::Complete->value)
+            ->where('completed_on', '>=', Carbon::now()->subDays(Config::get('view.completeDay')));
     }
 }
