@@ -20,7 +20,7 @@ class UpdateTaskRequest extends FormRequest
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
     public function rules(): array
-    {
+    {// todo: convert rules in to arrays
         return [
             'title' => 'required|max:100',
             'task_status' => 'required',

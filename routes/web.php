@@ -19,6 +19,8 @@ use Illuminate\Support\Facades\Route;
 */
 Route::get('/', [HomeController::class, 'create'])->name('home');
 
+// todo: you haven't used appropriate middlewares in your code !.
+
 Route::get('register/create', [RegisterController::class, 'create'])->name('register.create');
 Route::post('register', [RegisterController::class, 'store'])->name('register');
 
@@ -28,7 +30,7 @@ Route::post('login', [LogInController::class, 'store'])->name('login');
 Route::post('logout', [LogOutController::class, 'destroy'])->name('logout');
 
 Route::get('tasks/create', [TaskController::class, 'create'])->name('task.create');
-Route::post('tasks', [TaskController::class, 'store'])->name('task');
+Route::post('tasks', [TaskController::class, 'store'])->name('task'); // todo : use consistent names for route names.
 
 Route::get('tasks', [TaskController::class, 'index'])->name('task.index');
 Route::get('tasks/{task}', [TaskController::class, 'show'])->name('task.show');
@@ -36,5 +38,7 @@ Route::get('tasks/{task}', [TaskController::class, 'show'])->name('task.show');
 Route::get('tasks/{task}/edit', [TaskController::class, 'edit'])->name('task.edit');
 Route::patch('tasks/{task}', [TaskController::class, 'update'])->name('task.update');
 
-Route::delete('tasks/{task}', [TaskController::class, 'delete'])->name('delete');
+Route::delete('tasks/{task}', [TaskController::class, 'delete'])->name('delete'); // todo : use consistent names for route names.
+// todo : tend to use resources in routes of laravel if it is suitable for your routes :
+
 

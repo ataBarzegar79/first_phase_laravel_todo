@@ -20,12 +20,12 @@ class StoreTaskRequest extends FormRequest
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
     public function rules(): array
-    {
+    {// todo: convert rules in to arrays
         return [
             'title' => 'required|max:100',
-            'task_status' => 'required',
+            'task_status' => 'required', // todo : your statuses should be complete or incomplete !
             'description' => 'required',
-            'deadline' => 'required|date'
+            'deadline' => 'required|date' // todo : write a rule to check if deadline is bigger than today !
         ];
     }
 }

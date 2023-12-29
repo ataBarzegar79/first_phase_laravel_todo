@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('tasks', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id');
-            $table->enum('task_status',['NotCompleted','Completed'])->nullable();
+            $table->foreignId('user_id'); //todo : use constrained ! :
+            $table->enum('task_status',['NotCompleted','Completed'])->nullable(); //todo : Use enums in PHP instead of strict names in your code !
             $table->string('title');
             $table->string('description');
             $table->timestamp('deadline')->nullable();

@@ -24,7 +24,7 @@ class StoreRegisterRequest extends FormRequest
         return [
             'name' => 'required|max:100|min:3',
             'email' => 'required|email|max:225',
-            'password' => 'required|min:4'
+            'password' => 'required|min:4' // todo: convert rules in to arrays
         ];
     }
 }

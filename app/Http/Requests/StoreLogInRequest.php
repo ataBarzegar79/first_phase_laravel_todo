@@ -20,7 +20,7 @@ class StoreLogInRequest extends FormRequest
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
     public function rules(): array
-    {
+    {// todo: convert rules in to arrays
         return [
             'email' => 'required|email',
             'password' => 'required|min:7'
