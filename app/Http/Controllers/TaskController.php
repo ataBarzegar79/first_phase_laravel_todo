@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreTaskRequest;
+use App\Http\Requests\UpdateTaskRequest;
 use Illuminate\Support\Facades\Auth;
 use App\Models\{Task};
 use Str;
@@ -14,23 +16,18 @@ class TaskController extends Controller
         return view('create');
     }
 
-
-    public function store()
+    public function store(StoreTaskRequest $StoreRequest)
     {
-        \request()->validate([
-            'title' => 'required',
-            'start_time' => 'required|date',
-            'end_time' => 'required|date|after_or_equal:start_time',
-        ]);
+        $data = $StoreRequest->validated();
 
         Task::create
         ([
-            'user_id' => \request()->user()->id,
-            'title' => \request('title'),
-            'body' => \request('body'),
-            'started_at' => \request('start_time'),
-            'ended_at' => \request('end_time'),
-            'slug' => Str::slug(\request('title'), '-'),
+            'user_id' => request()->user()->id,
+            'title' => request('title'),
+            'body' => request('body'),
+            'started_at' => request('start_time'),
+            'ended_at' => request('end_time'),
+            'slug' => Str::slug(request('title'), '-'),
             'status' => 'In Progress',
             'completed_at' => null,
         ]);
@@ -42,17 +39,17 @@ class TaskController extends Controller
     {
         $sort = request('sort', 'created_at'); // get the sort parameter or use the default value 'created_at'
         $order = request('order', 'desc'); // get the order parameter or use the default value 'desc'
-        // $filter = request('filter', null); // get the filter parameter or use the default value null
+        $filter = request('filter', null); // get the filter parameter or use the default value null
 
         $tasks = Task::whereHas('user', function ($query) {
             $query->whereKey(Auth::user()->tasks()->pluck('id'));
         })
-            ->whereDate('ended_at', '>', now()->subWeek())
             ->orderBy($sort, $order)
+            ->where('status', $filter)
             ->paginate(10); // paginate the query results by 10 per page
 
-        // if($filter === null)
-        //     $tasks = $tasks->where('status', $filter);
+        if($filter === "1")
+            $tasks = $tasks->whereDate('ended_at', '>', now()->subWeek());
 
         return view('manage',
             [
@@ -80,16 +77,12 @@ class TaskController extends Controller
         return view('update', ["task" => $task]);
     }
 
-    public function update(Task $task)
+    public function update(Task $task, UpdateTaskRequest $updateRequest)
     {
-        $task = Task::where('id', $task->id)->firstOrFail();
 
-        request()->validate([
-            'title' => 'required',
-            'started_at' => 'required|date',
-            'ended_at' => 'required|date|after_or_equal:start_time',
-            'status' => 'string',
-        ]);
+        $data = $updateRequest->validated();
+
+        $task = Task::where('id', $task->id)->firstOrFail();
 
         $task->fill(request()->all());
         $task->completed_at = now();
