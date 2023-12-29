@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreTaskRequest;
 use App\Http\Requests\UpdateTaskRequest;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\{Task};
 use Str;
@@ -35,27 +36,31 @@ class TaskController extends Controller
         return to_route('manage');
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $sort = request('sort', 'created_at'); // get the sort parameter or use the default value 'created_at'
-        $order = request('order', 'desc'); // get the order parameter or use the default value 'desc'
-        $filter = request('filter', null); // get the filter parameter or use the default value null
+        // Get the filter, sort, and order variables from the request or use the default values
+        $filter = $request->input('filter', null);
+        $sort = $request->input('sort', 'created_at');
+        $order = $request->input('order', 'desc');
 
-        $tasks = Task::whereHas('user', function ($query) {
-            $query->whereKey(Auth::user()->tasks()->pluck('id'));
-        })
-            ->orderBy($sort, $order)
-            ->where('status', $filter)
-            ->paginate(10); // paginate the query results by 10 per page
+        // Query the tasks that belong to the authenticated user
+        $tasks = Task::where('user_id', auth()->id());
 
-        if($filter === "1")
-            $tasks = $tasks->whereDate('ended_at', '>', now()->subWeek());
+        // Apply the filter condition if it is not null or empty
+        if (!empty($filter)) {
+            $tasks = $tasks->where('status', $filter);
+        }
 
-        return view('manage',
-            [
-                'tasks' => $tasks
-            ]);
+        // Apply the sort and order conditions
+        $tasks = $tasks->orderBy($sort, $order);
+
+        // Paginate the results by 10 per page
+        $tasks = $tasks->paginate(10);
+
+        // Return the Manage.blade.php view with the tasks collection
+        return view('Manage', ['tasks' => $tasks]);
     }
+
 
 
     public function destroy(Task $task)
