@@ -73,8 +73,8 @@
                 <label for="filter" class="container2 text-gray-200">Filter by:</label>
                 <select name="filter" id="filter" class="bg-gray-700 text-black border border-gray-600 rounded-md">
                     <option value="" {{ request('filter') == '' ? 'selected' : '' }}>All</option>
-                    <option value="1" {{ request('filter') == '1' ? 'selected' : '' }}>Done</option>
-                    <option value="0" {{ request('filter') == '0' ? 'selected' : '' }}>In Progress</option>
+                    <option value="Done" {{ request('filter') == 'Done' ? 'selected' : '' }}>Done</option>
+                    <option value="In Progress" {{ request('filter') == 'In Progress' ? 'selected' : '' }}>In Progress</option>
                 </select>
             </div>
 

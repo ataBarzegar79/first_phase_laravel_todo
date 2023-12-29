@@ -47,8 +47,31 @@ class TaskController extends Controller
         $tasks = Task::where('user_id', auth()->id());
 
         // Apply the filter condition if it is not null or empty
-        if (!empty($filter)) {
-            $tasks = $tasks->where('status', $filter);
+        if (!empty($filter))
+        {
+
+            // If the filter is 0, show only the tasks that are in progress
+            if ($filter === "In Progress")
+                $tasks = $tasks->where('status', $filter);
+
+            // If the filter is 1, show only the tasks that are done within the current week
+            if ($filter === "Done")
+                $tasks = $tasks->where('status', $filter)
+                    ->whereDate('ended_at', '>', now()->startOfWeek());
+
+        }
+        else
+        {
+            // If the filter is null, show all in progress tasks and all done tasks that completed within this week
+            $tasks = $tasks->where(function ($query)
+            {
+                $query->where('status', 'In Progress')
+                    ->orWhere(function ($query)
+                    {
+                        $query->where('status', 'Done')
+                            ->whereDate('ended_at', '>', now()->startOfWeek());
+                    });
+            });
         }
 
         // Apply the sort and order conditions
