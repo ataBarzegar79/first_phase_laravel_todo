@@ -78,7 +78,7 @@ class TaskController extends Controller
         $tasks = $tasks->orderBy($sort, $order);
 
         // Paginate the results by 10 per page
-        $tasks = $tasks->paginate(10);
+        $tasks = $tasks->paginate(config('pagination.per_page'));
 
         // Return the Manage.blade.php view with the tasks collection
         return view('Manage', ['tasks' => $tasks]);
