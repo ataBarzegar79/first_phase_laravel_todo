@@ -37,9 +37,6 @@
                         </thead>
                         <tbody>
                         @foreach($tasks as $task)
-{{--                            @if($task->status === 'COMPLETE' && \Carbon\Carbon::parse($task->completed_on)->diffInDays() > 7)--}}
-{{--                                @continue(1)--}}
-{{--                            @endif--}}
                             <x-task :task="$task"/>
                         @endforeach
                         </tbody>
