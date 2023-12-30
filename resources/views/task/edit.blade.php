@@ -1,4 +1,4 @@
-<x-layout>
+<x-app-layout>
     <section class="px-6 py-8">
         <main class="max-w-lg mx-auto mt-10 p-6 rounded-xl border bg-blue-100">
             <form action="/tasks/{{ $task->id }}" method="post">
@@ -83,4 +83,4 @@
             </form>
         </main>
     </section>
-</x-layout>
+</x-app-layout>
