@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Task;
-use DateTime;
+use App\Http\Requests\StoreTaskRequest;
+use App\Http\Requests\UpdateTaskRequest;
 use Illuminate\Http\Request;
+use App\Models\{Task};
 use Str;
 
 class TaskController extends Controller
@@ -14,70 +15,101 @@ class TaskController extends Controller
     {
         return view('create');
     }
-    public function store()
+
+    public function store(StoreTaskRequest $StoreRequest)
     {
-        \request()->validate([
-            'title' => 'required',
-            'start_time' => 'required|date',
-            'end_time' => 'required|date|after_or_equal:start_time',
-        ]);
+        $data = $StoreRequest->validated();
 
         Task::create
         ([
-            'user_id' => \request()->user()->id,
-            'title' => \request('title'),
-            'body' => \request('body'),
-            'starting_time' => \request('start_time'),
-            'finishing_time' => \request('end_time'),
-            'slug' => Str::slug(\request('title'), '-'),
-            'status' => false,
+            'user_id' => request()->user()->id,
+            'title' => request('title'),
+            'body' => request('body'),
+            'started_at' => request('start_time'),
+            'ended_at' => request('end_time'),
+            'slug' => Str::slug(request('title'), '-'),
+            'status' => 'In Progress',
             'completed_at' => null,
         ]);
         session()->flash('success', 'Task Added Successfully!');
         return to_route('manage');
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $sort = request('sort', 'created_at'); // get the sort parameter or use the default value 'created_at'
-        $order = request('order', 'desc'); // get the order parameter or use the default value 'desc'
-        $filter = request('filter', null); // get the filter parameter or use the default value null
-        if($filter !== null)
-            $tasks = Task::where('user_id', auth()->user()->id)->whereDate('finishing_time', '>', now()->subWeek())->orderBy($sort, $order)->where('status', $filter)->paginate(10);
+        // Get the filter, sort, and order variables from the request or use the default values
+        $filter = $request->input('filter', null);
+        $sort = $request->input('sort', 'created_at');
+        $order = $request->input('order', 'desc');
+
+        // Query the tasks that belong to the authenticated user
+        $tasks = Task::where('user_id', auth()->id());
+
+        // Apply the filter condition if it is not null or empty
+        if (!empty($filter))
+        {
+
+            // If the filter is 0, show only the tasks that are in progress
+            if ($filter === "In Progress")
+                $tasks = $tasks->where('status', $filter);
+
+            // If the filter is 1, show only the tasks that are done within the current week
+            if ($filter === "Done")
+                $tasks = $tasks->where('status', $filter)
+                    ->whereDate('ended_at', '>', now()->startOfWeek());
+
+        }
         else
-            $tasks = Task::where('user_id', auth()->user()->id)->whereDate('finishing_time', '>', now()->subWeek())->orderBy($sort, $order)->paginate(10);
-        return view('manage', compact('tasks'));
+        {
+            // If the filter is null, show all in progress tasks and all done tasks that completed within this week
+            $tasks = $tasks->where(function ($query)
+            {
+                $query->where('status', 'In Progress')
+                    ->orWhere(function ($query)
+                    {
+                        $query->where('status', 'Done')
+                            ->whereDate('ended_at', '>', now()->startOfWeek());
+                    });
+            });
+        }
+
+        // Apply the sort and order conditions
+        $tasks = $tasks->orderBy($sort, $order);
+
+        // Paginate the results by 10 per page
+        $tasks = $tasks->paginate(config('pagination.per_page'));
+
+        // Return the Manage.blade.php view with the tasks collection
+        return view('Manage', ['tasks' => $tasks]);
     }
 
-    public function destroy($slug)
+
+
+    public function destroy(Task $task)
     {
-        // Find the task by its slug
-        $task = Task::where('slug', $slug)->firstOrFail();
+        // Find the task by its id
+        $task = Task::where('id', $task->id)->firstOrFail();
 
         // Delete the task from the database
         $task->delete();
 
         // Redirect back to the manage view with a success message
         session()->flash('success', 'Task deleted successfully!');
-        return redirect()->route('manage');
+        return to_route('manage');
     }
 
-    public function edit($slug)
+    public function edit(Task $task)
     {
-        $task = Task::where('slug', $slug)->firstOrFail();
+        $task = Task::where('id', $task->id)->firstOrFail();
         return view('update', ["task" => $task]);
     }
 
-    public function update($slug)
+    public function update(Task $task, UpdateTaskRequest $updateRequest)
     {
-        $task = Task::where('slug', $slug)->firstOrFail();
 
-        \request()->validate([
-            'title' => 'required',
-            'starting_time' => 'required|date',
-            'finishing_time' => 'required|date|after_or_equal:start_time',
-            'status' => 'boolean',
-        ]);
+        $data = $updateRequest->validated();
+
+        $task = Task::where('id', $task->id)->firstOrFail();
 
         $task->fill(request()->all());
         $task->completed_at = now();

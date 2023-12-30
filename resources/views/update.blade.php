@@ -27,28 +27,30 @@
                             @enderror
                         </div>
                         <div class="mb-4">
-                            <label for="starting_time" class="block text-white text-sm font-bold mb-2">Starting Time</label>
-                            <input type="datetime-local" name="starting_time" id="starting_time" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="Enter starting time" value="{{ $task->starting_time }}" required>
-                            @error('starting_time')
+                            <label for="started_at" class="block text-white text-sm font-bold mb-2">Starting Time</label>
+                            <input type="datetime-local" name="started_at" id="started_at" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="Enter starting time" value="{{ $task->started_at }}" required>
+                            @error('started_at')
                             <span class="text-red-500 text-xs italic">{{ $message }}</span>
                             @enderror
                         </div>
                         <div class="mb-4">
-                            <label for="finishing_time" class="block text-white text-sm font-bold mb-2">Finishing Time</label>
-                            <input type="datetime-local" name="finishing_time" id="end_time" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="Enter finishing time" value="{{ $task->finishing_time }}" required>
-                            @error('finishing_time')
+                            <label for="ended_at" class="block text-white text-sm font-bold mb-2">Finishing Time</label>
+                            <input type="datetime-local" name="ended_at" id="ended_at" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="Enter finishing time" value="{{ $task->ended_at }}" required>
+                            @error('ended_at')
                             <span class="text-red-500 text-xs italic">{{ $message }}</span>
                             @enderror
                         </div>
 
                         <div class="mb-4">
                             <label for="status" class="block text-white text-sm font-bold mb-2">Status</label>
-                            <input type="checkbox" name="status" id="status" value="1" {{ old('status', $task->status) ? 'checked' : '' }}">
+                            <input type="hidden" name="status" value="In Progress">
+                            <input type="checkbox" name="status" id="status" value="Done" {{ old('status', $task->status) == "Done" ? 'checked' : '' }}>
                             <span class="container text-white text-sm">Task Completed</span>
                             @error('status')
                             <span class="text-red-500 text-xs italic">{{ $message }}</span>
                             @enderror
                         </div>
+
                         <style>
                             .container {
                                 margin-left: 5px;

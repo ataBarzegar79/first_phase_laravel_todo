@@ -73,8 +73,8 @@
                 <label for="filter" class="container2 text-gray-200">Filter by:</label>
                 <select name="filter" id="filter" class="bg-gray-700 text-black border border-gray-600 rounded-md">
                     <option value="" {{ request('filter') == '' ? 'selected' : '' }}>All</option>
-                    <option value="1" {{ request('filter') == '1' ? 'selected' : '' }}>Done</option>
-                    <option value="0" {{ request('filter') == '0' ? 'selected' : '' }}>In Progress</option>
+                    <option value="Done" {{ request('filter') == 'Done' ? 'selected' : '' }}>Done</option>
+                    <option value="In Progress" {{ request('filter') == 'In Progress' ? 'selected' : '' }}>In Progress</option>
                 </select>
             </div>
 
@@ -106,8 +106,8 @@
                             <th class="px-4 py-2" >Title</th>
                             <th class="px-4 py-2" >Description</th>
                             <th class="px-4 py-2" >Created at</th>
-                            <th class="px-4 py-2" >Starting Time</th>
-                            <th class="px-4 py-2" >Finishing Time</th>
+                            <th class="px-4 py-2" >Starts at</th>
+                            <th class="px-4 py-2" >Ends at</th>
                             <th class="px-4 py-2" >Status</th>
                             <th class="px-4 py-2" >Completed at</th>
                             <th class="px-4 py-2" >Actions</th>
@@ -118,12 +118,7 @@
                         <!-- Loop through the tasks and display their details -->
                         @foreach ($tasks as $task)
                             @php
-                                $status = "In Progress";
-                                if ($task->status)
-                                    {
-                                        $status = "Done";
-                                    }
-                                if (!$task->status)
+                                if ($task->status === 'In Progress')
                                     $completed_at = "Not Done Yet";
                                 else $completed_at = $task->completed_at;
                         @endphp
@@ -132,14 +127,14 @@
                                 <td class="border px-4 py-2">{{ $task->title }}</td>
                                 <td class="border px-4 py-2">{{ $task->body }}</td>
                                 <td class="border px-4 py-2">{{ $task->created_at }}</td>
-                                <td class="border px-4 py-2">{{ $task->starting_time }}</td>
-                                <td class="border px-4 py-2">{{ $task->finishing_time }}</td>
-                                <td class="border px-4 py-2">{{ $status }}</td>
+                                <td class="border px-4 py-2">{{ $task->started_at }}</td>
+                                <td class="border px-4 py-2">{{ $task->ended_at }}</td>
+                                <td class="border px-4 py-2">{{ $task->status }}</td>
                                 <td class="border px-4 py-2">{{ $completed_at }}</td>
                                 <td class="border px-4 py-2">
                                     <!-- Add some buttons to edit or delete the tasks -->
                                     <!-- Use the bg-green-500 class for the update button -->
-                                    <form action="{{ route('update', $task->slug) }}" method="GET" class="inline-block">
+                                    <form action="{{ route('edit', $task->slug) }}" method="GET" class="inline-block">
                                         @csrf
                                         @method('GET')
                                         <button type="submit" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Update</button>
