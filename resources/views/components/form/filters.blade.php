@@ -36,9 +36,9 @@
                         name="status"
                         onchange="this.form.submit()"
                         class="appearance-none h-full rounded-r border-t sm:rounded-r-none sm:border-r-0 border-r border-b block w-full bg-white border-gray-400 text-gray-700 py-2 px-4 pr-8 leading-tight focus:outline-none focus:border-l focus:border-r focus:bg-white focus:border-gray-500">
-                        <option value="" {{ request()->is("/tasks") ? 'selected' : '' }}>All</option>
-                        <option value="incomplete" {{ request('status') == 'incomplete' ? 'selected' : '' }} class="text-red-500">INCOMPLETE</option>
-                        <option value="complete" {{ request('status') == 'complete' ? 'selected' : '' }} class="text-green-500">COMPLETE</option>
+                        <option value="" {{ request('status') !== \App\Enums\TaskStatus::class ? 'selected' : '' }}>All</option>
+                        <option value="{{ \App\Enums\TaskStatus::Incomplete->value }}" {{ request('status') === \App\Enums\TaskStatus::Incomplete->value ? 'selected' : '' }} class="text-red-500">INCOMPLETE</option>
+                        <option value="{{ \App\Enums\TaskStatus::Complete->value }}" {{ request('status') === \App\Enums\TaskStatus::Complete->value ? 'selected' : '' }} class="text-green-500">COMPLETE</option>
                     </select>
                 </label>
             </form>
