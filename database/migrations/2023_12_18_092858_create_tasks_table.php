@@ -17,7 +17,7 @@ return new class extends Migration
             $table->text('description')->nullable();
             $table->timestamp('deadline');
             $table->timestamp('completed_on')->nullable();
-            $table->enum('status', (array)\App\Enums\TaskStatus::class);
+            $table->enum('status', (array)\App\Enums\TaskStatus::class); //todo : you have done this this in a wrong way, check your db to see the effect !
             $table->foreignId('user_id')->constrained();
             $table->timestamps();
         });

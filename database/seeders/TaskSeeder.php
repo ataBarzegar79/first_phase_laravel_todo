@@ -3,7 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Task;
-use App\Models\User;
+use App\Models\User; // todo : drop the unused codes
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 

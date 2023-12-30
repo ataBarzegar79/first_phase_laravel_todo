@@ -17,7 +17,7 @@ class Task extends Model
         'status' => TaskStatus::class,
     ];
 
-    public function scopeSearch($query, ?string $content): void
+    public function scopeSearch($query, ?string $content): void //todo : scopes are used for only frequently used queries , omit this .
     {
         $query->when($content ?? false,
             fn($query, $content) => $query

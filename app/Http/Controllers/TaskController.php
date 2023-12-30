@@ -10,8 +10,8 @@ use App\Http\Requests\UpdateTaskRequest;
 use App\Models\Task;
 use Carbon\Carbon;
 use Config;
-use Illuminate\Database\Eloquent\Builder;
-use function request;
+use Illuminate\Database\Eloquent\Builder; //todo: drop unused code
+use function request; // todo: tend using Request Facade
 
 class TaskController extends Controller
 {
