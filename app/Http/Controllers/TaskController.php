@@ -10,8 +10,6 @@ use App\Http\Requests\UpdateTaskRequest;
 use App\Models\Task;
 use Carbon\Carbon;
 use Config;
-use Illuminate\Database\Eloquent\Builder; //todo: drop unused code
-use function request; // todo: tend using Request Facade
 
 class TaskController extends Controller
 {
@@ -21,8 +19,14 @@ class TaskController extends Controller
         $user = auth()->user();
         $tasksQuery = $user->tasks();
         $tasksQuery = $tasksQuery->latest('deadline');
-        $searchAndStatus = request('search');
-        $tasksQuery = $tasksQuery->search($searchAndStatus);
+        $search = request('search') ?? false;
+        $tasksQuery = $tasksQuery->where(function ($query) use ($search) {
+            $query->where(function ($q) use ($search) {
+                $q->where('title', 'like', '%' . $search . '%');
+            })->orWhere(function ($q) use ($search) {
+                $q->orWhere('description', 'like', '%' . $search . '%');
+            });
+        });
         switch ($request['status']):
             case (TaskStatus::Complete->value):
                 $tasksQuery->complete();
@@ -39,10 +43,10 @@ class TaskController extends Controller
                     });
                 });
         endswitch;
+
         $tasks = $tasksQuery
             ->paginate(request('paginate') ?? Config::get('view.paginate'))
             ->withQueryString();
-
         return view('tasks.index', [
             'tasks' => $tasks
         ]);

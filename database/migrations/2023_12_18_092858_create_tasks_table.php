@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\TaskStatus;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -17,7 +18,7 @@ return new class extends Migration
             $table->text('description')->nullable();
             $table->timestamp('deadline');
             $table->timestamp('completed_on')->nullable();
-            $table->enum('status', (array)\App\Enums\TaskStatus::class); //todo : you have done this this in a wrong way, check your db to see the effect !
+            $table->enum('status', [TaskStatus::Incomplete, TaskStatus::Complete])->default(TaskStatus::Incomplete);
             $table->foreignId('user_id')->constrained();
             $table->timestamps();
         });
