@@ -1,5 +1,6 @@
 <?php
 
+use App\Enum\StatusEnum;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -13,12 +14,13 @@ return new class extends Migration
     {
         Schema::create('tasks', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id'); //todo : use constrained ! :
-            $table->enum('task_status',['NotCompleted','Completed'])->nullable(); //todo : Use enums in PHP instead of strict names in your code !
+            $table->foreignId('user_id')->constrained();
+            $table->enum('task_status', [StatusEnum::NOTCOMPLETED->value,StatusEnum::COMPLETED->value])->nullable();
             $table->string('title');
             $table->string('description');
             $table->timestamp('deadline')->nullable();
             $table->timestamps();
+            $table->softDeletes()->nullable();
         });
     }
 

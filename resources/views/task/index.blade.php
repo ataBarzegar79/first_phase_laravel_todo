@@ -1,4 +1,4 @@
-<x-layout>
+<x-app-layout>
     <section class="px-6 py-12">
         <main class="w-full mx-auto mt-10 p-6 rounded-xl border bg-white">
             <div>
@@ -53,4 +53,4 @@
             </p>
         </main>
     </section>
-</x-layout>
+</x-app-layout>

@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreRegisterRequest extends FormRequest
+class IndexTaskRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,9 +22,8 @@ class StoreRegisterRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|max:100|min:3',
-            'email' => 'required|email|max:225',
-            'password' => 'required|min:4' // todo: convert rules in to arrays
+            'search' => ['nullable'],
+            'select' => ['nullable','in:NotCompleted,Completed'],
         ];
     }
 }
