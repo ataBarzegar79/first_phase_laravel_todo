@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreRegisterRequest;
 use App\Models\User;
-use Illuminate\Validation\Rule; //todo : clean unused code
 use function request;
 
 class RegisterController extends Controller
