@@ -25,12 +25,10 @@ Route::middleware(['auth', 'verified'])->prefix('dashboard')->group(function () 
     Route::get('tasks/create', [TaskController::class, 'create'])->name('create');
     Route::post('tasks/create', [TaskController::class, 'store'])->name('store');
 
-    Route::get('tasks/manage', [TaskController::class, 'index'])->name('manage');
-
-    Route::post('tasks/delete/{task:slug}', [TaskController::class, 'destroy'])->name('destroy');
-
-    Route::get('update/{task:slug}', [TaskController::class, 'edit'])->name('edit');
-    Route::post('tasks/update/{task:slug}', [TaskController::class, 'update'])->name('update');
+    Route::get('tasks/manage', [TaskController::class, 'index'])->name('manage'); // todo : you haven't chosen a suitable name for your route, this can be a good example : https://laravel.com/docs/10.x/controllers#actions-handled-by-resource-controllers:~:text=Actions%20Handled%20by%20Resource%20Controllers
+    Route::post('tasks/delete/{task:slug}', [TaskController::class, 'destroy'])->name('destroy'); // todo : use ids where as possible + your naming isn't standard :   https://laravel.com/docs/10.x/controllers#actions-handled-by-resource-controllers:~:text=Actions%20Handled%20by%20Resource%20Controllers
+    Route::get('update/{task:slug}', [TaskController::class, 'edit'])->name('edit');// todo : you haven't chosen a suitable name for your route, this can be a good example : https://laravel.com/docs/10.x/controllers#actions-handled-by-resource-controllers:~:text=Actions%20Handled%20by%20Resource%20Controllers
+    Route::post('tasks/update/{task:slug}', [TaskController::class, 'update'])->name('update'); // todo : you haven't chosen a suitable name for your route, this can be a good example : https://laravel.com/docs/10.x/controllers#actions-handled-by-resource-controllers:~:text=Actions%20Handled%20by%20Resource%20Controllers
 });
 
 Route::middleware('auth')->group(function () {
