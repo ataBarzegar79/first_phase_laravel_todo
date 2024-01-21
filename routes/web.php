@@ -38,7 +38,7 @@ Route::middleware('auth')->group(function () {
 
     Route::delete('tasks/{task}', [TaskController::class, 'delete'])
         ->name('task.delete');
-});
+}); // todo : it is recommended to use resources if you are using all available rotes : https://laravel.com/docs/10.x/controllers#resource-controllers
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

@@ -18,8 +18,8 @@ class Task extends Model
         $query->whereNot(function ($query) {
             $query
                 ->where('task_status', '=', 'Completed')
-                ->whereDate('deadline', '<', Carbon::now()->subDays(7));
-        });
+                ->whereDate('deadline', '<', Carbon::now()->subDays(7)); // todo : read magic numbers from config file .
+        }); //todo : nice query!
     }
 
     public function scopeSearch($query, array $filters)

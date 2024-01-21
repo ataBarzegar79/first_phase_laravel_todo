@@ -4,6 +4,7 @@
             <div>
                 <div class="flex">
                     <form action="#" method="GET">
+{{--                        todo : a form with het method ? --}}
                         <input type="text" name="search" class="bg-gray-200 placeholder-black font-semi-bold p-2 text-sm mb-3"
                                placeholder="search" value="{{request('search')}}">
                     </form>
