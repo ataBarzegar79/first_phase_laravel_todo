@@ -21,6 +21,7 @@
 
             <h2 class="text-lg font-medium text-gray-900">
                 {{ __('Are you sure you want to delete your account?') }}
+{{--   todo : what is the purpose of {{}} and translation file here ?              --}}
             </h2>
 
             <p class="mt-1 text-sm text-gray-600">

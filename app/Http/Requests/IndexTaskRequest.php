@@ -22,8 +22,8 @@ class IndexTaskRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'search' => ['nullable'],
-            'select' => ['nullable','in:NotCompleted,Completed'],
+            'search' => ['nullable'], //todo : what do you search ? give it as a name.
+            'select' => ['nullable','in:NotCompleted,Completed'], // todo : use enums!, you haven't behaved consistent throughout your code.
         ];
-    }
+    } // todo : select is not an appropriate name for your query parameter.
 }

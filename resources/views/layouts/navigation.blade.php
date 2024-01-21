@@ -4,6 +4,7 @@
         <div class="flex justify-between h-16">
             <div class="icon-flax flex items-center">
                 <a href="{!! auth()->user() ? '/tasks'  : route('login')  !!}">
+{{--                    todo : I think you could manage these functionalities with  directives in blade : https://laravel.com/docs/10.x/blade#:~:text=If%20needed%2C%20you,directives%3A--}}
                     <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor"
                          class="bi bi-journal-plus border-r pr-3 border-r-black mr-5 text-black" viewBox="0 0 16 16">
                         <path fill-rule="evenodd" d="M8 5.5a.5.5 0 0 1 .5.5v1.5H10a.5.5 0 0 1 0

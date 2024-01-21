@@ -11,13 +11,14 @@ class TaskController extends Controller
 {
     public function create()
     {
-        return view('/dashboard');
+        return view('/dashboard'); //todo use route names
     }
 
     public function store(StoreTaskRequest $request)
     {
         $validator = $request->validated();
-
+        // todo : you also had access to title like this :
+        // $request->title
         $validator['user_id'] = auth()->id();
 
         Task::create($validator);
@@ -28,14 +29,15 @@ class TaskController extends Controller
     public function index(IndexTaskRequest $request)
     {
         $validator = $request->validated();
+        //todo : your validator is always an empty array !!!!!!
 
         $task = auth()
             ->user()
             ->tasks()
             ->latest('deadline')
-            ->filter()
-            ->select($validator)
-            ->search($validator)
+            ->filter() // todo: it is not right to make it scope.
+            ->select($validator) //todo : you haven't chosen a good name . select is a very specific name in Sql. change it.
+            ->search($validator) // todo : put search out of scope.
             ->simplePaginate(5)
             ->withQueryString();
 
@@ -58,7 +60,7 @@ class TaskController extends Controller
     {
         $validator = $request->validated();
 
-        $validator['user_id'] = auth()->id();
+        $validator['user_id'] = auth()->id(); //todo : why do you update user_id ?
 
         $task->update($validator);
 

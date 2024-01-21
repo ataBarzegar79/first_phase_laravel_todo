@@ -57,3 +57,5 @@ Route::middleware('auth')->group(function () {
     Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])
                 ->name('logout');
 });
+
+// todo : I told you to install breeze in another laravel project and analyze its functionality, delete it and use yours !, but in a right way.

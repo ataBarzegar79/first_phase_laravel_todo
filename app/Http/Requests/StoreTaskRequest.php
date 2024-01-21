@@ -23,8 +23,8 @@ class StoreTaskRequest extends FormRequest
     {
         return [
             'title' => ['required','max:100'],
-            'task_status' => ['required','in:NotCompleted,Completed'],
-            'description' => ['required'],
+            'task_status' => ['required','in:NotCompleted,Completed'], // todo : use enums
+            'description' => ['required'], // todo : it seems sensible to set a limit
             'deadline' => ['required','date','after:today']
         ];
     }
