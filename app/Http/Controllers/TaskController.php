@@ -18,7 +18,7 @@ class TaskController extends Controller
 
     public function store(StoreTaskRequest $StoreRequest)
     {
-        $data = $StoreRequest->validated();
+        $StoreRequest->validated();
 
         Task::create
         ([
@@ -82,8 +82,6 @@ class TaskController extends Controller
         // Return the Manage.blade.php view with the tasks collection
         return view('Manage', ['tasks' => $tasks]);
     }
-
-
 
     public function destroy(Task $task)
     {
