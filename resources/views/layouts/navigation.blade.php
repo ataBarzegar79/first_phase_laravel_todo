@@ -16,11 +16,11 @@
                         {{ __('Dashboard') }}
                     </x-nav-link>
 
-                    <x-nav-link :href="route('create')" :active="request()->routeIs('create')">
+                    <x-nav-link :href="route('task.create')" :active="request()->routeIs('task.create')">
                         {{ __('Create') }}
                     </x-nav-link>
 
-                    <x-nav-link :href="route('manage')" :active="request()->routeIs('manage')">
+                    <x-nav-link :href="route('task.index')" :active="request()->routeIs('task.index')">
                         {{ __('Manage All Tasks') }}
                     </x-nav-link>
 

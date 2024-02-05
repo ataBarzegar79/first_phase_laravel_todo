@@ -32,12 +32,12 @@ class UpdateTaskRequest extends FormRequest
     public function messages()
     {
         return [
-            'title.required' => 'The title field is required.',
-            'started_at.required' => 'The start time field is required.',
-            'started_at.date' => 'The start time must be a valid date.',
-            'ended_at.required' => 'The end time field is required.',
-            'ended_at.date' => 'The end time must be a valid date.',
-            'ended_at.after_or_equal' => 'The end time must be a date after or equal to the start time.',
+            'title.required' => __('messages.title_required'),
+            'start_time.required' => __('messages.start_time_required'),
+            'start_time.date' => __('messages.start_time_date'),
+            'end_time.required' => __('messages.end_time_required'),
+            'end_time.date' => __('messages.end_time_date'),
+            'end_time.after_or_equal' => __('messages.end_time_after_or_equal'),
         ];
     }
 
