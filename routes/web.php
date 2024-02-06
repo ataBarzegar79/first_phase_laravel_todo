@@ -15,23 +15,28 @@ use App\Http\Controllers\TaskController;
 |
 */
 
-Route::get('/', function () {
+Route::get('/', function ()
+{
     return view('welcome');
-});
+})->name('laravel.homepage');
 
-Route::middleware(['auth', 'verified'])->prefix('dashboard')->group(function () {
+Route::middleware(['auth', 'verified'])->prefix('dashboard')->group(function ()
+{
     Route::get('/', function () {return view('dashboard');})->name('dashboard');
 
-    Route::get('tasks/create', [TaskController::class, 'create'])->name('create');
-    Route::post('tasks/create', [TaskController::class, 'store'])->name('store');
+    Route::get('tasks/create', [TaskController::class, 'create'])->name('task.create');
+    Route::post('tasks/create', [TaskController::class, 'store'])->name('task.store');
 
-    Route::get('tasks/manage', [TaskController::class, 'index'])->name('manage'); // todo : you haven't chosen a suitable name for your route, this can be a good example : https://laravel.com/docs/10.x/controllers#actions-handled-by-resource-controllers:~:text=Actions%20Handled%20by%20Resource%20Controllers
-    Route::post('tasks/delete/{task:slug}', [TaskController::class, 'destroy'])->name('destroy'); // todo : use ids where as possible + your naming isn't standard :   https://laravel.com/docs/10.x/controllers#actions-handled-by-resource-controllers:~:text=Actions%20Handled%20by%20Resource%20Controllers
-    Route::get('update/{task:slug}', [TaskController::class, 'edit'])->name('edit');// todo : you haven't chosen a suitable name for your route, this can be a good example : https://laravel.com/docs/10.x/controllers#actions-handled-by-resource-controllers:~:text=Actions%20Handled%20by%20Resource%20Controllers
-    Route::post('tasks/update/{task:slug}', [TaskController::class, 'update'])->name('update'); // todo : you haven't chosen a suitable name for your route, this can be a good example : https://laravel.com/docs/10.x/controllers#actions-handled-by-resource-controllers:~:text=Actions%20Handled%20by%20Resource%20Controllers
+    Route::get('tasks/manage', [TaskController::class, 'index'])->name('task.index');
+
+    Route::post('tasks/delete/{task:id}', [TaskController::class, 'destroy'])->name('task.destroy');
+
+    Route::get('update/{task:id}', [TaskController::class, 'edit'])->name('task.edit');
+    Route::post('tasks/update/{task:id}', [TaskController::class, 'update'])->name('task.update');
 });
 
-Route::middleware('auth')->group(function () {
+Route::middleware('auth')->group(function ()
+{
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');

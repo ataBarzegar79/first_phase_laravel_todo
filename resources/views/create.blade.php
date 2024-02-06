@@ -19,7 +19,7 @@
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
                     <!-- Add the form code here -->
-                    <form method="POST" action={{ route('store') }}>
+                    <form method="POST" action={{ route('task.store') }}>
                         @csrf
                         <div class="mb-4">
                             <label for="title" class="block text-gray-700 text-sm font-bold mb-2">Title</label>

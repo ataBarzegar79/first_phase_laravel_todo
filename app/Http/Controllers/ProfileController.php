@@ -34,7 +34,7 @@ class ProfileController extends Controller
 
         $request->user()->save();
 
-        return Redirect::route('profile.edit')->with('status', 'profile-updated'); // todo: use language files
+        return Redirect::route('profile.edit')->with('status',__('status.profile_updated'));
     }
 
     /**
@@ -54,6 +54,6 @@ class ProfileController extends Controller
 
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-        return Redirect::to('/'); //todo: use names for your route names, though it belongs to Breeze.
+        return to_route('laravel.homepage');
     }
 }

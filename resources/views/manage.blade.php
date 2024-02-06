@@ -48,23 +48,23 @@
         }, 10000);
     </script>
 
-    <form action="{{ route('manage') }}" method="get" class="bg-gray-800 p-4 rounded-lg">
+    <form action="{{ route('task.index') }}" method="get" class="bg-gray-800 p-4 rounded-lg">
         <div class="flex items-center space-x-10 justify-center">
 
             <div class="container">
                 <label for="sort" class="container2 text-gray-200">Sort by:</label>
                 <select name="sort" id="sort" class="bg-gray-700 text-black border border-gray-600 rounded-md">
-                    <option value="created_at" {{ request('sort') == 'created_at' ? 'selected' : '' }}>Created at</option>
-                    <option value="starting_time" {{ request('sort') == 'starting_time' ? 'selected' : '' }}>Starting time</option>
-                    <option value="finishing_time" {{ request('sort') == 'finishing_time' ? 'selected' : '' }}>Finishing time</option>
+                    <option value="created_at" {{ request('sort') == \App\Enums\Sort::createdAt->value ? 'selected' : '' }}>Created at</option>
+                    <option value="starting_time" {{ request('sort') == \App\Enums\Sort::startedAt->value ? 'selected' : '' }}>Starting time</option>
+                    <option value="finishing_time" {{ request('sort') == \App\Enums\Sort::endedAt->value ? 'selected' : '' }}>Finishing time</option>
                 </select>
             </div>
 
             <div class="container">
                 <label for="order" class="container2 text-gray-200">Order by:</label>
                 <select name="order" id="order" class="bg-gray-700 text-black border border-gray-600 rounded-md space-x-10">
-                    <option value="desc" {{ request('order') == 'desc' ? 'selected' : '' }}>Descending</option>
-                    <option value="asc" {{ request('order') == 'asc' ? 'selected' : '' }}>Ascending</option>
+                    <option value="desc" {{ request('order') == \App\Enums\Order::descending->value ? 'selected' : '' }}>Descending</option>
+                    <option value="asc" {{ request('order') == \App\Enums\Order::ascending->value ? 'selected' : '' }}>Ascending</option>
                 </select>
             </div>
 
@@ -72,9 +72,9 @@
             <div class="container">
                 <label for="filter" class="container2 text-gray-200">Filter by:</label>
                 <select name="filter" id="filter" class="bg-gray-700 text-black border border-gray-600 rounded-md">
-                    <option value="" {{ request('filter') == '' ? 'selected' : '' }}>All</option>
-                    <option value="Done" {{ request('filter') == 'Done' ? 'selected' : '' }}>Done</option>
-                    <option value="In Progress" {{ request('filter') == 'In Progress' ? 'selected' : '' }}>In Progress</option>
+                    <option value="All" {{ request('filter') == \App\Enums\Status::all->value ? 'selected' : '' }}>All</option>
+                    <option value="Done" {{ request('filter') == \App\Enums\Status::done->value ? 'selected' : '' }}>Done</option>
+                    <option value="In Progress" {{ request('filter') == \App\Enums\Status::inProgress->value ? 'selected' : '' }}>In Progress</option>
                 </select>
             </div>
 
@@ -134,13 +134,13 @@
                                 <td class="border px-4 py-2">
                                     <!-- Add some buttons to edit or delete the tasks -->
                                     <!-- Use the bg-green-500 class for the update button -->
-                                    <form action="{{ route('edit', $task->slug) }}" method="GET" class="inline-block">
+                                    <form action="{{ route('task.edit', $task->id) }}" method="GET" class="inline-block">
                                         @csrf
                                         @method('GET')
                                         <button type="submit" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Update</button>
                                     </form>
                                     <!-- Use the bg-red-500 class for the delete button -->
-                                    <form method="POST" action="{{ route('destroy', $task->slug) }}" class="inline-block">
+                                    <form method="POST" action="{{ route('task.destroy', $task->id) }}" class="inline-block">
                                         @csrf
                                         <button type="submit" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Delete</button>
                                     </form>

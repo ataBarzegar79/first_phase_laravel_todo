@@ -17,8 +17,8 @@ class ProfileUpdateRequest extends FormRequest
     {
         // todo : use language files.
         return [
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', Rule::unique(User::class)->ignore($this->user()->id)],
+            'name' => __('rules.name_rules'),
+            'email' => __('rules.email_rules'),
         ];
     }
 }
