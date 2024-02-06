@@ -15,6 +15,7 @@ class ProfileUpdateRequest extends FormRequest
      */
     public function rules(): array
     {
+        // todo : use language files.
         return [
             'name' => __('rules.name_rules'),
             'email' => __('rules.email_rules'),

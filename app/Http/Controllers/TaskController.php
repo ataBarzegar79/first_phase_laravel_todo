@@ -66,7 +66,6 @@ class TaskController extends Controller
 
         // Apply the sort and order conditions
         $tasks = $tasks->orderBy($sort, $order);
-
         // Paginate the results by 10 per page
         $tasks = $tasks->paginate(config::get('pagination.per_page'));
 
@@ -77,7 +76,6 @@ class TaskController extends Controller
 
     public function destroy(Task $task)
     {
-
         // Delete the task from the database
         $task->delete();
 
@@ -93,16 +91,15 @@ class TaskController extends Controller
 
     public function update(Task $task, UpdateTaskRequest $updateRequest)
     {
-
         $updateRequest->validated();
 
         $task->fill(request()->all());
         $task->completed_at = now();
 
         $task->save();
-
         session()->flash('success', __('messages.update_success'));
         return to_route('task.index');
+
     }
 
 }
